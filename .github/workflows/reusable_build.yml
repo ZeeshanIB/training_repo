@@ -1,11 +1,15 @@
 name: docker reusable workflow
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+  workflow_call:
+    
+    
+   # branches:
+    #  - main
+  #pull_request:
+   # branches:
+   #   - main
 defaults:
  run:
   working-directory: ./web-app
