@@ -1,10 +1,12 @@
 name: docker reusable workflow
 on:
-  workflow_call:
-    inputs:
-      name:
-        required: true
-        type: string
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    
 jobs:
   build:
     runs-on: ubuntu-latest
