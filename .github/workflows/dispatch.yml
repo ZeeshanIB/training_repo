@@ -2,7 +2,7 @@ name: docker1
 on:
   workflow_dispatch:
 jobs:
-  call-workflow-in-local-repo:
+  call-workflow:
     uses: ./.github/workflows/reusable_build.yml
     with: 
       name: myapp
