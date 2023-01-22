@@ -1,13 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify
 
 from psycopg2 import connect
 
 def get_connection():
     connection = connect(
-        host="hostname",
-        database="dbname",
-        user="username",
-        password="password"
+        host="postgres",
+        database="postgres",
+        user="webuser",
+        password="mysecretpassword"
     )
     return connection
 
@@ -43,18 +43,26 @@ def index():
     return "IP address stored!"
 @app.route('/display_table')
 def display_table():
-    connection = get_connection()
-    cursor = connection.cursor()
+    conn = connect(
+     port= 5432,
+     host= "postgres" ,
+     #user="postgres",
+     password="mysecretpassword",
+    # dbname="postgres"
+    )
 
-    cursor.execute("SELECT * FROM ip_addresses")
+    # Create the table to store IP addresses
+    with conn.cursor() as cur:
 
-    rows = cursor.fetchall()
-    print(rows)
+        cur.execute("SELECT * FROM ip_addresses")
 
-    cursor.close()
-    connection.close()
+        rows = cur.fetchall()
+        print(rows)
 
-    return render_template('table.html', rows=rows)
+    cur.close()
+    conn.close()
+
+    return jsonify(rows)
 
 
 if __name__ == '_main_':
