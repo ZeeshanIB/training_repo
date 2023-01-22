@@ -10,15 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: updating db connection
-      run: |
-        echo host=${host}, user=${user}, password=${password}, dbname=${dbname} >> app.py
+
     - name: docker login
       env:
           DOCKER_USER: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker image
       run: docker build . --file web-app-docker/Dockerfile --tag zeeshanib/webapp-docker:v2
     - name: Docker Push
