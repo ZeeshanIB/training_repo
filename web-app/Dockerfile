@@ -1,7 +1,7 @@
 FROM python:3.8.3-slim-buster
 RUN apt-get update 
 
-COPY requirments.txt requirments.txt
+COPY web-app/requirments.txt /opt/requirments.txt
 RUN pip install -r requirments.txt
 RUN groupadd -g 999 webuser && \
     useradd -r -u 999 -g webuser webuser
