@@ -31,12 +31,7 @@ jobs:
       run: docker build --tag zeeshanib/webapp-docker:v2 .
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/webapp-docker:v2
-  link:
-    runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
 
     - name: Start Postgres container
       run: docker run -d --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres:15-alpine
