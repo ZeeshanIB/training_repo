@@ -1,6 +1,6 @@
 FROM python:3.8.3-slim-buster
 RUN apt-get update 
-WORKDIR /web-app-docker
+WORKDIR /web-app
 COPY requirments.txt requirments.txt
 RUN pip install -r requirments.txt
 RUN groupadd -g 999 webuser && \
