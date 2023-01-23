@@ -4,5 +4,8 @@ on:
 jobs:
   call-workflow:
     uses: ./.github/workflows/reusable_build.yml
-    with: 
-      name: web
+    secrets:
+      : ${{secrets.DOCKER_USER}}
+        ${{secrets.DOCKER_PASSWORD}}
+    #with:
+     # name: web
