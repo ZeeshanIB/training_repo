@@ -3,10 +3,13 @@ on:
  # push:
  # pull_request:
   workflow_call:
-    #inputs:
-     # name:
-      #  required: true
-       # type: string
+    inputs:
+      DOCKER_USER:
+        required: true
+        type: string
+      DOCKER_PASSWORD:
+        required: true
+        type: string
     
    # branches:
     #  - main
@@ -25,9 +28,9 @@ jobs:
 
 
     - name: docker login
-      env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+     # env:
+      #  DOCKER_USER: ${{secrets.DOCKER_USER}}
+       # DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: Build the Docker image
