@@ -5,7 +5,7 @@ defaults:
  run:
   working-directory: ./web-app
 jobs:
-  call-workflow:
+  app_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
