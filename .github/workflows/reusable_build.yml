@@ -44,5 +44,7 @@ jobs:
 
     - name: Start Web App container
       run: docker run -d --name webapp --link postgres:postgres -p 8000:8000 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+    - name: curl_put
+      run: curl -v localhost:8000
     - name: curl
       run: curl -v localhost:8000/display_table
