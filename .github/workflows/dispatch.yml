@@ -1,10 +1,8 @@
 name: docker1
 on:
-  push:
-    branches:
-      - "main"
+  workflow_dispatch:
 jobs:
   call-workflow:
     uses: ./.github/workflows/reusable_build.yml
     with: 
-      name: myapp
+      name: web
