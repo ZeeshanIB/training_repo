@@ -3,6 +3,6 @@ on:
   workflow_dispatch:
 jobs:
   call-workflow:
-    uses: ./.github/workflows/reusable_build.yml
+    uses: ./.github/actions/workflows/reusable_build.yml
     with: 
       name: web
