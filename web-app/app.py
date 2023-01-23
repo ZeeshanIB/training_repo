@@ -66,4 +66,4 @@ def display_table():
 
 
 if __name__ == '_main_':
-    app.run(debug=True, host='0.0.0.0',port=8080)
+    app.run(debug=True, host='127.0.0.1',port=8000)
