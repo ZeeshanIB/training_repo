@@ -3,10 +3,10 @@ on:
  # push:
  # pull_request:
   workflow_call:
-    inputs:
-      name:
-        required: true
-        type: string
+    #inputs:
+     # name:
+      #  required: true
+       # type: string
     
    # branches:
     #  - main
