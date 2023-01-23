@@ -1,11 +1,14 @@
 name: docker1
 on:
   workflow_dispatch:
+defaults:
+ run:
+  working-directory: ./web-app
 jobs:
   call-workflow:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      
       - name: call-workflow
 
         uses: ./.github/workflows/reusable_build.yml
