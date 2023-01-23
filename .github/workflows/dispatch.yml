@@ -3,12 +3,13 @@ on:
   workflow_dispatch:
 jobs:
   call-workflow:
-    uses: ./.github/workflows/reusable_build.yml
-    secrets:
-      DOCKER_USER: ${{secrets.DOCKER_USER}}
-      DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-     
-    with:
-       DOCKER_USER: ${DOCKER_USER}
-       DOCKER_PASSWORD: ${DOCKER_PASSWORD}
-     
+    runs-on: ubuntu-latest
+    steps:
+      - name: call-workflow
+
+        uses: ./.github/workflows/reusable_build.yml
+
+        env:
+          DOCKER_USER: ${DOCKER_USER}
+          DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+        

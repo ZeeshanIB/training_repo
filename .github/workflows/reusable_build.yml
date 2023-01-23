@@ -3,13 +3,13 @@ on:
  # push:
  # pull_request:
   workflow_call:
-    inputs:
-      DOCKER_USER:
-        required: true
-        type: string
-      DOCKER_PASSWORD:
-        required: true
-        type: string
+    #inputs:
+    # DOCKER_USER:
+    #   required: true
+    #   type: string
+    #  DOCKER_PASSWORD:
+    #    required: true
+    #    type: string
     
    # branches:
     #  - main
