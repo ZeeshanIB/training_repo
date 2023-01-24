@@ -61,8 +61,11 @@ jobs:
       run: docker ps 
     - name: docker webapp logs
       run: docker logs pythonapp
+    - name: apt-get install -y telnet
+      run: apt-get install -y telnet
     - name: exec
-      run: docker exec pythonapp ping 172.18.0.3
+      run: docker exec pythonapp telnet 172.18.0.3 80
+
     - name: curl_post
       run: |
         sleep 30
