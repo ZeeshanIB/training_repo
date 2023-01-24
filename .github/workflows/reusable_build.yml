@@ -64,7 +64,7 @@ jobs:
     - name: apt-get install -y telnet
       run: sudo apt-get install -y telnet
     - name: exec
-      run: docker exec pythonapp telnet 172.18.0.3 80
+      run: docker start pythonapp && docker exec pythonapp telnet 172.18.0.3 80
 
     - name: curl_post
       run: |
