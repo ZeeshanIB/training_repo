@@ -49,12 +49,14 @@ jobs:
   #  - name: docker webapp logs
   #    run: docker logs -f webapp 
 
-  #  - name: docker container logs
-  #    run: docker logs -f webapp 
+    
 
 
     - name: docker compose up
       run: docker-compose up -d
+
+    - name: docker networks
+      run: docker inspect db --format='{{ json .NetworkSettings.Networks }}' | jq && docker inspect pythonapp --format='{{ json .NetworkSettings.Networks }}' | jq
 
     - name: docker container list
       run: docker ps 
