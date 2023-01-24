@@ -46,6 +46,9 @@ jobs:
       run: docker run -d --name webapp --link db:db -e DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
     - name: docker container list
       run: docker ps 
+    - name: docker container inspection
+      run: docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' webapp
+
     - name: curl_post
       run: |
         curl -X POST http://webapp:80/items -H "Content-Type:application/json" -d '{"title":"title2", "content":"content2"}'
