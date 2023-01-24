@@ -47,7 +47,7 @@ jobs:
     - name: docker container list
       run: docker ps 
     - name: docker db logs
-      run: docker logs -f db
+      run: docker logs -f db | docker logs -f webapp 
 
     - name: docker container logs
       run: docker logs -f webapp 
