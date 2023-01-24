@@ -61,8 +61,8 @@ jobs:
       run: docker ps 
     - name: docker webapp logs
       run: docker logs -f pythonapp
-    #- name: curl_post
-     # run: |
-      #  curl -X POST http://172.18.0.3:80/items -H "Content-Type:application/json" -d '{"title":"title2", "content":"content2"}'
+    - name: curl_post
+      run: |
+        curl -X POST http://172.18.0.3:80/items -H "Content-Type:application/json" -d '{"title":"title2", "content":"content2"}'
 
 
