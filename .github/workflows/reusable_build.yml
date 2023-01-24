@@ -63,6 +63,6 @@ jobs:
       run: docker logs pythonapp
     - name: curl_post
       run: |
-        curl http://172.18.0.3:80
+        curl Crl http://pythonapp:80/items/1
 
 
