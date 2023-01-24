@@ -60,7 +60,7 @@ jobs:
     - name: docker container list
       run: docker ps 
     - name: docker webapp logs
-      run: docker logs -f pythonapp
+      run: docker logs pythonapp
     - name: curl_post
       run: |
         curl http://172.18.0.3:80
