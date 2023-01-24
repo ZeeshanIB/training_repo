@@ -47,7 +47,7 @@ jobs:
     - name: docker container list
       run: docker ps 
     - name: docker container logs
-      run: docker logs webapp
+      run: docker logs -f webapp 
 
 
     - name: curl_post
