@@ -63,6 +63,7 @@ jobs:
       run: docker logs pythonapp
     - name: curl_post
       run: |
-        curl Crl http://localhost:80/items/1
+        sleep 30
+        curl -X GET http://pythonapp:80
 
 
