@@ -64,6 +64,6 @@ jobs:
     - name: curl_post
       run: |
         sleep 30
-        curl -X GET http://pythonapp:80
+        curl -X GET http://172.18.0.3:80
 
 
