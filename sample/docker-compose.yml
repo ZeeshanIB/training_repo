@@ -1,0 +1,23 @@
+version: "3"
+services:
+    web:
+        build: .
+        ports:
+            - "5000:5000"
+        environment:
+            - DATABASE_URL=postgres://your_db_user:your_db_password@172.26.0.3:your_db_port/your_db_name
+        networks:
+            - back-tier
+    db:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=your_db_user
+            - POSTGRES_PASSWORD=your_db_password
+            - POSTGRES_DB=your_db_name
+        ports:
+            - "5432:5432"
+        networks:
+            - back-tier
+
+networks:
+  back-tier:
