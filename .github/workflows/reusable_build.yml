@@ -62,7 +62,7 @@ jobs:
     - name: docker webapp logs
       run: docker logs pythonapp
     - name: exec
-      run: docker exec -it 87c7bdd3b50e ping 172.18.0.3
+      run: docker exec -it pythonapp ping 172.18.0.3
     - name: curl_post
       run: |
         sleep 30
