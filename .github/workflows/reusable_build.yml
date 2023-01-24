@@ -62,7 +62,7 @@ jobs:
     - name: docker webapp logs
       run: docker logs pythonapp
     - name: apt-get install -y telnet
-      run: apt-get install -y telnet
+      run: sudo apt-get install -y telnet
     - name: exec
       run: docker exec pythonapp telnet 172.18.0.3 80
 
