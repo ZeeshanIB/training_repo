@@ -1,5 +1,5 @@
 FROM python:3.6-slim-buster
-
+RUN apt-get update && apt-get install curl -y
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
