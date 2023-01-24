@@ -23,6 +23,19 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
 
@@ -38,12 +51,8 @@ jobs:
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/webapp-docker:v2
 
-
-    - name: Start Postgres container
-      run: docker run -d --name db -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -p 5432:5432 postgres:12
-
     - name: Start Web App container
-      run: docker run -d --name webapp --link db:db -e DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+      run: docker run -d --name webapp -e DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
     - name: docker container list
       run: docker ps 
     - name: docker webapp logs
