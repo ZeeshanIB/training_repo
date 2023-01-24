@@ -54,7 +54,7 @@ jobs:
 
 
     - name: docker compose up
-      run: docker-compose up  
+      run: docker-compose up -d
 
     - name: docker container list
       run: docker ps 
