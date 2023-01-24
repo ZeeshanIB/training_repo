@@ -1,69 +1,33 @@
 from flask import Flask, request, jsonify
-
-from psycopg2 import connect
-
-def get_connection():
-    connection = connect(
-        host="postgres",
-        database="postgres",
-        user="webuser",
-        password="mysecretpassword"
-    )
-    return connection
-
+from flask_sqlalchemy import SQLAlchemy
+import os
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+db = SQLAlchemy(app)
+class Item(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  title = db.Column(db.String(80), unique=True, nullable=False)
+  content = db.Column(db.String(120), unique=True, nullable=False)
+
+  def __init__(self, title, content):
+    self.title = title
+    self.content = content
+db.create_all()
+@app.route('/items/<id>', methods=['GET'])
+def get_item(id):
+  item = Item.query.get(id)
+  del item.__dict__['_sa_instance_state']
+  return jsonify(item)
 
 
-@app.route('/')
-def index():
-    # Connect to the Postgres container
-    conn = connect(
-     port= 5432,
-     host= "postgres" ,
-     #user="postgres",
-     password="mysecretpassword",
-    # dbname="postgres"
-    )
-
-    # Create the table to store IP addresses
-    with conn.cursor() as cur:
-        cur.execute("CREATE TABLE IF NOT EXISTS ip_addresses (id SERIAL PRIMARY KEY, address VARCHAR(15));")
-
-    # Store the incoming IP address
-    with conn.cursor() as cur:
-        cur.execute("INSERT INTO ip_addresses (address) VALUES (%s);", (request.remote_addr,))
-
-    
-   # cur.execute("SELECT * FROM ip_addresses")
-    #rows = cur.fetchall()
-    #for row in rows:
-     #   print(row)
-    conn.commit()
-    conn.close()
-    return "IP address stored!"
-@app.route('/display_table')
-def display_table():
-    conn = connect(
-     port= 5432,
-     host= "postgres" ,
-     #user="postgres",
-     password="mysecretpassword",
-    # dbname="postgres"
-    )
-
-    # Create the table to store IP addresses
-    with conn.cursor() as cur:
-
-        cur.execute("SELECT * FROM ip_addresses")
-
-        rows = cur.fetchall()
-        print(rows)
-
-    cur.close()
-    conn.close()
-
-    return jsonify(rows)
+@app.route('/items', methods=['POST'])
+def create_item():
+  body = request.get_json()
+  db.session.add(Item(body['title'], body['content']))
+  db.session.commit()
+  return "item created"
 
 
-if __name__ == '_main_':
-    app.run(debug=True, host='127.0.0.1',port=8000)
+
+if __name__ == '__main__':
+    app.run(debug=True)
