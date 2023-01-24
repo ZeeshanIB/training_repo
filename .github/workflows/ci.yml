@@ -1,0 +1,29 @@
+name: CI/CD
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Postgres service
+      uses: actions/setup-postgres@v1
+      with:
+        version: 12
+        initdb-args: -E UTF8
+
+    - name: Start up Postgres service
+      run: |
+        sudo service postgresql start
+        psql -c "CREATE DATABASE myapp_db;" -U postgres
+
+    - name: Set up environment variables for webapp container
+      run: echo "DATABASE_URL=postgres://postgres@localhost/myapp_db" >> $GITHUB_ENV
+
+    - name: Build and run webapp container
+      run: |
+        docker run -p 3000:3000 -e DATABASE_URL -d ${{secrets.DOCKER_USER}}/webapp-docker:v2
