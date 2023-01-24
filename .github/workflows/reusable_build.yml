@@ -57,12 +57,13 @@ jobs:
     - name: docker networks
       run: docker inspect db --format='{{ json .NetworkSettings.Networks }}' | jq && docker inspect pythonapp --format='{{ json .NetworkSettings.Networks }}' | jq
 
-    - name: docker container list
-      run: docker ps 
+    
     - name: docker webapp logs
       run: docker logs pythonapp
     - name: apt-get install -y telnet
       run: sudo apt-get install -y telnet
+    - name: docker container list
+      run: docker ps 
     - name: exec
       run: docker exec pythonapp telnet 172.18.0.3:80
 
