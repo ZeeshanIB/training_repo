@@ -39,6 +39,7 @@ jobs:
         # Runs a script that creates a PostgreSQL table, populates
         # the table with data, and then retrieves the data.
         run: |
+          docker logs db
           docker ps 
     
           docker run -d --name webapp --link db:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
