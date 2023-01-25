@@ -40,7 +40,7 @@ jobs:
         run: |
           docker ps 
     
-          docker run -d --name webapp --link postgres:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+          docker run -d --name webapp --link 8dc13e05888046a98b288dda3e33a257_postgres12_e27c38:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
          # docker logs postgres 
         # Environment variables used by the `client.js` script to create a new PostgreSQL table.
         #env:
