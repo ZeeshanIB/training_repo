@@ -3,8 +3,8 @@ RUN apt-get update && apt-get install curl -y
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
-#RUN groupadd -g 999 webuser && \
-#    useradd -r -u 999 -g webuser webuser
+RUN groupadd -g 999 webuser && \
+    useradd -r -u 999 -g webuser webuser
 COPY . .
 
 EXPOSE 80

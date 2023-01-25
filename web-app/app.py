@@ -4,7 +4,7 @@ import os
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-SQLALCHEMY_TRACK_MODIFICATIONS=True
+
 db = SQLAlchemy(app)
 class Item(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
