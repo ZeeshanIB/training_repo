@@ -58,8 +58,11 @@ jobs:
     
     - name: pythonapp container logs
       run: |
-        sleep 30
-        docker logs -f pythonapp
+        docker logs pythonapp
+        docker ps
+        curl -X GET http://172.18.0.3:80
+        docker logs pythonapp
+        docker ps
 
    # - name: installing dependencies
    #   run: sudo apt-get install -y telnet
@@ -67,7 +70,7 @@ jobs:
 
       run: |
         sleep 30
-        docker ps 
+         
     #- name: debubbing
     #  run: docker exec pythonapp telnet 172.18.0.3:80
 
