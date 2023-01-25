@@ -29,20 +29,6 @@ jobs:
           --health-retries 5
     steps:
       
-      - name: Clear cache
-        run: |
-          echo "Clearing cache"
-          pwd
-          git stash --all
-          git stash drop stash@{0} || echo "No stash found"
-          git clean -fdx
-         
-          git reset --hard
-          
-        env:
-          CI: true
-
-
       # Downloads a copy of the code in your repository before running CI tests
       
       - name: Check out repository code
@@ -55,7 +41,7 @@ jobs:
         run: |
           docker ps 
     
-          docker run -d --name webapp --link postgres:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+          docker run -d --name webapp --link db:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
          # docker logs postgres 
         # Environment variables used by the `client.js` script to create a new PostgreSQL table.
         #env:
