@@ -14,9 +14,11 @@ jobs:
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
-      db:
+      
+      -- name db:
         # Docker Hub image
         image: postgres:12
+        
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
