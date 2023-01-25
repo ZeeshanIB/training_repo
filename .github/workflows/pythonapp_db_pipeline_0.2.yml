@@ -8,6 +8,7 @@ jobs:
   container-job:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-22.04
+    container: ubuntu-22.04
     # Docker Hub image that `container-job` executes in
     #container: python:3.6-slim-buster
 
@@ -15,7 +16,7 @@ jobs:
     services:
       # Label used to access the service container
       
-      -- name db:
+      db:
         # Docker Hub image
         image: postgres:12
         
