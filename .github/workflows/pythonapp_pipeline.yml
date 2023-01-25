@@ -1,7 +1,7 @@
-name: docker reusable workflow
+name: web-app pipeline
 on:
   push:
-  #pull_request:
+  pull_request:
   workflow_call:
     #inputs:
     # DOCKER_USER:
@@ -16,13 +16,14 @@ on:
   #pull_request:
    # branches:
    #   - main
+# setting woking directory in github repo
 defaults:
  run:
   working-directory: ./web-app
     
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-webapp-image:
+    runs-on: ubuntu-22.04
 
 
     steps:
@@ -37,7 +38,7 @@ jobs:
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: Build the Docker image
       run: docker build --tag zeeshanib/webapp-docker:v2 .
-    - name: Docker Push
+    - name: Docker Push to docker hub
       run: docker push ${{secrets.DOCKER_USER}}/webapp-docker:v2
 
 
@@ -48,26 +49,27 @@ jobs:
   #    run: docker ps 
     
 
-    
-
-
-    - name: docker compose up
+    - name: run docker compose 
       run: docker-compose up -d
 
-    - name: docker networks
+    - name: db and pythonapp container networks details
       run: docker inspect db --format='{{ json .NetworkSettings.Networks }}' | jq && docker inspect pythonapp --format='{{ json .NetworkSettings.Networks }}' | jq
 
     
-    - name: docker webapp logs
+    - name: pythonapp container logs
       run: docker logs pythonapp
-    - name: apt-get install -y telnet
-      run: sudo apt-get install -y telnet
-    - name: docker container list
-      run: docker ps 
-    #- name: exec
+
+   # - name: installing dependencies
+   #   run: sudo apt-get install -y telnet
+    - name: running container
+
+      run: |
+        sleep 30
+        docker ps 
+    #- name: debubbing
     #  run: docker exec pythonapp telnet 172.18.0.3:80
 
-    - name: curl_post
+    - name: sending post requst
       run: |
         sleep 30
         curl -X GET http://172.18.0.3:80

@@ -1,11 +1,11 @@
-name: docker1
+name: pipeline
 on:
   workflow_dispatch:
 defaults:
  run:
   working-directory: ./web-app
 jobs:
-  call-workflow:
+  call-pyhthonapp_pipeline:
 
-    uses: ./.github/workflows/reusable_build.yml
+    uses: ./.github/workflows/python_pipeline.yml
     secrets: inherit
