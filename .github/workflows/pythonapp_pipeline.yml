@@ -57,7 +57,9 @@ jobs:
 
     
     - name: pythonapp container logs
-      run: docker logs pythonapp
+      run: |
+        sleep 30
+        docker logs -f pythonapp
 
    # - name: installing dependencies
    #   run: sudo apt-get install -y telnet
