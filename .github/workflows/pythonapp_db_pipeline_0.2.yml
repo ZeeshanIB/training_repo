@@ -47,10 +47,10 @@ jobs:
         #docker logs postgres
           #docker run -d --name webapp --link postgres:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
         # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
+        #env:
           # The hostname used to communicate with the PostgreSQL service container
           #POSTGRES_HOST: postgres
           # The default PostgreSQL port
           #POSTGRES_PORT: 5432
 
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+          #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
