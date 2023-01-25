@@ -32,15 +32,16 @@ jobs:
       - name: Clear cache
         run: |
           echo "Clearing cache"
+          pwd
           git stash --all
           git stash drop stash@{0} || echo "No stash found"
           git clean -fdx
-          git submodule foreach --recursive git clean -fdx
-          git submodule foreach --recursive git reset --hard
+         
           git reset --hard
-          git submodule update --init --recursive
+          
         env:
           CI: true
+
 
       # Downloads a copy of the code in your repository before running CI tests
       
