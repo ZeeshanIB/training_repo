@@ -40,7 +40,7 @@ jobs:
         run: |
           docker network create mynetwork
           docker network connect mynetwork $(docker ps --format "{{.Names}}")
-          docker network connect mynetwork webapp
+        #docker network connect mynetwork webapp
 
           
 
