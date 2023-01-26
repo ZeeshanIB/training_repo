@@ -53,8 +53,8 @@ jobs:
           echo $container_names
           echo docker inspect $container_names | grep '"Name"' | awk '{print $2}' | tr -d '",'
 
-
-
+      - name: running
+        run: |
           docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=***postgres:5432/postgres -p 80:80 {0}/webapp-docker:v2
 
          
