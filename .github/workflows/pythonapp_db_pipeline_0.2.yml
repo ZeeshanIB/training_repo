@@ -5,12 +5,11 @@ on: push
 
 jobs:
   # Label of the container job
-  container-job:
+  webapp_deployment:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-22.04
     #runs-on: self-hosted
-    # Docker Hub image that `container-job` executes in
-    #container: python:3.6-slim-buster
+   
 
     # Service containers to run with `container-job`
     services:
@@ -32,10 +31,11 @@ jobs:
           --health-retries 5
     steps:
       
-      # Downloads a copy of the code in your repository before running CI tests
+      # Downloads a copy of the code in your repository 
       
       - name: Check out repository code
         uses: actions/checkout@v3
+
 
       - name: create and connect to networks
         run: |
@@ -45,13 +45,11 @@ jobs:
 
           
 
-      - name: Connect 17sto PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
+      - name: Connect to service container PostgreSQL
+       
         run: | 
           docker ps
           container_names=$(docker ps --format "{{.Names}}")
-          echo $container_names
           echo $container_names
           docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
 
@@ -80,4 +78,4 @@ jobs:
           curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
           sleep 10
       - name: sending get request
-        run: curl http://172.19.0.3:80/items/1  
+        run: curl http://localhost:80/items/1  

@@ -7,5 +7,5 @@ defaults:
 jobs:
   call-pyhthonapp_pipeline:
 
-    uses: ./.github/workflows/python_pipeline.yml
+    uses: ./.github/workflows/pythonapp_pipeline.yml
     secrets: inherit
