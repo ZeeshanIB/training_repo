@@ -43,7 +43,7 @@ jobs:
 
     - name: create and connect to networks
       run: |
-          docker network create mynetwork
+          docker network create dbnetwork
 
     - name: start postgres container
       run: docker run -d --name postgres --network dbnetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:12
