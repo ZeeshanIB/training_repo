@@ -67,3 +67,12 @@ jobs:
           #POSTGRES_PORT: 5432
 
           #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+      - name: docker checks
+        run: |
+          sleep 30
+          docker ps 
+
+      - name: sending post requst
+        run: |
+          sleep 30
+          curl -X GET http://webapp:80/items/1

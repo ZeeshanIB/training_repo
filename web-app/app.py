@@ -15,11 +15,6 @@ class Item(db.Model):
     self.title = title
     self.content = content
 db.create_all()
-@app.route('/')
-def starting():
-  
-  return("connecting")
-
 @app.route('/items/<id>', methods=['GET'])
 def get_item(id):
   item = Item.query.get(id)
