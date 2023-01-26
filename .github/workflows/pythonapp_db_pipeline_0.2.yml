@@ -55,7 +55,7 @@ jobs:
 
 
 
-          docker run -d --name webapp --network="mynetwork" -e DATABASE_URL=***postgres:5432/postgres -p 80:80 {0}/webapp-docker:v2
+          docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=***postgres:5432/postgres -p 80:80 {0}/webapp-docker:v2
 
          
 
