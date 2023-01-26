@@ -77,4 +77,6 @@ jobs:
         run: |
           sleep 30
           curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
-          curl -X GET http://172.19.0.3:80/items/1
+          sleep 10
+      - name: sending get request
+        run: curl http://172.19.0.3:80/items/1  
