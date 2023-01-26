@@ -39,7 +39,7 @@ jobs:
       - name: create and connect to networks
         run: |
           docker network create mynetwork
-          docker network connect mynetwork $container_names
+          docker network connect mynetwork postgres
           docker network connect mynetwork webapp
 
           
