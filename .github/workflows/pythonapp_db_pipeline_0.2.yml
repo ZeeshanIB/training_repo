@@ -39,12 +39,12 @@ jobs:
       - name: create and connect to networks
         run: |
           docker network create mynetwork
-          docker network connect mynetwork << docker ps --format "{{.Names}}"
+          docker network connect mynetwork $(docker ps --format "{{.Names}}")
           docker network connect mynetwork webapp
 
           
 
-      - name: Connect to PostgreSQL
+      - name: Connect 17sto PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
         # the table with data, and then retrieves the data.
         run: | 
