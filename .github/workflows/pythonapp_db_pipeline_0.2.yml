@@ -36,7 +36,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-    
+      - name: create and connect to networks
+        run: |
+          docker network create mynetwork
+          docker network connect mynetwork $container_names
+          docker network connect mynetwork webapp
+
           
 
       - name: Connect to PostgreSQL
@@ -47,6 +52,10 @@ jobs:
           container_names=$(docker ps --format "{{.Names}}")
           echo $container_names
           echo docker inspect $container_names | grep '"Name"' | awk '{print $2}' | tr -d '",'
+
+
+
+          docker run -d --name webapp --net=mynetwork -e DATABASE_URL=***postgres:5432/postgres -p 80:80 {0}/webapp-docker:v2
 
          
 
