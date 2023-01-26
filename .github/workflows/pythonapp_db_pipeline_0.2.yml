@@ -46,7 +46,9 @@ jobs:
           docker ps
           container_names=$(docker ps --format "{{.Names}}")
           echo $container_names
-          docker inspect $container_names --format='{{ json .NetworkSettings.Networks }}'
+          echo docker inspect $container_names | grep '"Name"' | awk '{print $2}' | tr -d '",'
+
+         
 
     
         #docker run -d --name webapp --link $container_names:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
