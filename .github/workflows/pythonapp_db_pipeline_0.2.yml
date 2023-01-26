@@ -39,7 +39,7 @@ jobs:
       - name: create and connect to networks
         run: |
           docker network create mynetwork
-          docker network connect mynetwork << echo $container_names
+          docker network connect mynetwork << container_names=$(docker ps --format "{{.Names}}")
           docker network connect mynetwork webapp
 
           
