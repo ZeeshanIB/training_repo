@@ -69,9 +69,9 @@ jobs:
           #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
       - name: docker checks
         run: |
-
+          sleep 30
           docker ps 
-          docker logs -f webapp
+          docker logs webapp
 
       - name: sending post requst
         run: |
