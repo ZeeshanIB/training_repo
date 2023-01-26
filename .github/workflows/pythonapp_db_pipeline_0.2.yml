@@ -71,6 +71,7 @@ jobs:
         run: |
 
           docker ps 
+          docker logs webapp
 
       - name: sending post requst
         run: |
