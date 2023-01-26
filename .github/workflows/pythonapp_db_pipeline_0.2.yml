@@ -76,4 +76,4 @@ jobs:
       - name: sending post requst
         run: |
           sleep 30
-          curl -X GET http://webapp:80/items/1
+          curl -X GET http://172.19.0.3:80/items/1
