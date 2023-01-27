@@ -1,0 +1,11 @@
+name: pipeline
+on:
+  workflow_dispatch:
+defaults:
+ run:
+  working-directory: ./web-app
+jobs:
+  call-pyhthonapp_pipeline:
+
+    uses: ./.github/workflows/pythonapp_pipeline.yml
+    secrets: inherit

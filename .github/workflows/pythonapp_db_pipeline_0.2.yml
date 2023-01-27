@@ -1,0 +1,85 @@
+
+
+name: running PostgreSQL service 
+on: push
+
+jobs:
+  # Label of the container job
+  webapp_deployment:
+    # Containers must run in Linux based operating systems
+    #runs-on: ubuntu-22.04
+    runs-on: self-hosted
+   
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      
+      db:
+        # Docker Hub image
+        image: postgres:12
+        
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      
+      # Downloads a copy of the code in your repository 
+      
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+
+      - name: create and connect to networks
+        run: |
+          docker ps 
+          db_container= $(docker ps --format "{{.Names}}") | awk '{print $NF}'
+          echo $db_container
+     # - name: network connection
+      #  run: |
+       #   docker network connect hostnetwork 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90
+        #docker network connect hostnetwork webapp
+ # docker network create hostnetwork
+          
+
+      - name: Connect to service container PostgreSQL
+       
+        run: | 
+          docker ps
+          container_names=$(docker ps --format "{{.Names}}")
+          echo $container_names
+          docker run -d --name webapp --link 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90:postgres --network hostnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+
+         
+
+    
+        #docker run -d --name webapp --link $container_names:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+         # docker logs postgres 
+        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+        #env:
+          # The hostname used to communicate with the PostgreSQL service container
+          #POSTGRES_HOST: postgres
+          # The default PostgreSQL port
+          #POSTGRES_PORT: 5432
+
+          #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+      - name: docker checks
+        run: |
+          sleep 30
+          
+          docker logs webapp
+
+      - name: sending post requst
+        run: |
+          sleep 30
+          curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
+          sleep 10
+      - name: sending get request
+        run: curl http://localhost:80/items/1  
