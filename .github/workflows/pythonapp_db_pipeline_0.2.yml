@@ -40,11 +40,10 @@ jobs:
       - name: create and connect to networks
         run: |
          
-          db_container= $(docker ps --format "{{.Names}}")
-          echo db_container
+          docker network create hostnetwork
           docker network connect hostnetwork $db_container
         #docker network connect hostnetwork webapp
- # docker network create hostnetwork
+ # 
           
 
       - name: Connect to service container PostgreSQL
