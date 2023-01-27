@@ -7,8 +7,8 @@ jobs:
   # Label of the container job
   webapp_deployment:
     # Containers must run in Linux based operating systems
-    #runs-on: ubuntu-22.04
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
+    #runs-on: self-hosted
    
 
     # Service containers to run with `container-job`
@@ -39,14 +39,10 @@ jobs:
 
       - name: create and connect to networks
         run: |
-          docker ps 
-          db_container= $(docker ps --format "{{.Names}}") | awk '{print $NF}'
-          echo $db_container
-     # - name: network connection
-      #  run: |
-       #   docker network connect hostnetwork 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90
-        #docker network connect hostnetwork webapp
- # docker network create hostnetwork
+          docker network create mynetwork
+          docker network connect mynetwork $(docker ps --format "{{.Names}}")
+        #docker network connect mynetwork webapp
+
           
 
       - name: Connect to service container PostgreSQL
@@ -55,7 +51,7 @@ jobs:
           docker ps
           container_names=$(docker ps --format "{{.Names}}")
           echo $container_names
-          docker run -d --name webapp --link 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90:postgres --network hostnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+          docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
 
          
 
@@ -73,7 +69,7 @@ jobs:
       - name: docker checks
         run: |
           sleep 30
-          
+          docker ps 
           docker logs webapp
 
       - name: sending post requst
