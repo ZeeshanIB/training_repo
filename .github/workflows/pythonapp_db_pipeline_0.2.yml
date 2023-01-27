@@ -42,9 +42,9 @@ jobs:
           docker ps 
           db_container= $(docker ps --format "{{.Names}}") | awk '{print $NF}'
           echo $db_container
-      - name: network connection
-        run: |
-          docker network connect hostnetwork 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90
+     # - name: network connection
+      #  run: |
+       #   docker network connect hostnetwork 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90
         #docker network connect hostnetwork webapp
  # docker network create hostnetwork
           
