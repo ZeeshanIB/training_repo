@@ -1,0 +1,84 @@
+name: web-app pipeline
+on:
+  push:
+  pull_request:
+  workflow_call:
+    #inputs:
+    # DOCKER_USER:
+    #   required: true
+    #   type: string
+    #  DOCKER_PASSWORD:
+    #    required: true
+    #    type: string
+    
+   # branches:
+    #  - main
+  #pull_request:
+   # branches:
+   #   - main
+# setting woking directory in github repo
+defaults:
+ run:
+  working-directory: ./web-app
+    
+jobs:
+  build-webapp-image:
+    runs-on: ubuntu-22.04
+
+
+    steps:
+    - uses: actions/checkout@v3
+
+
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+    - name: Build the Docker image
+      run: docker build --tag zeeshanib/webapp-docker:v2 .
+    - name: Docker Push to docker hub
+      run: docker push ${{secrets.DOCKER_USER}}/webapp-docker:v2
+
+    - name: create and connect to networks
+      run: |
+          docker network create dbnetwork
+
+    - name: start postgres container
+      run: docker run -d --name postgres --network dbnetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:12
+
+    - name: Start Web App container
+      run: docker run -d --name webapp --link postgres:postgres --network dbnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+  #  - name: docker container list
+  #    run: docker ps 
+    
+
+   # - name: run docker compose 
+    #  run: docker-compose up -d
+
+   # - name: db and pythonapp container networks details
+   #   run: docker inspect db --format='{{ json .NetworkSettings.Networks }}' | jq && docker inspect pythonapp --format='{{ json .NetworkSettings.Networks }}' | jq
+
+    
+    - name: webapp container logs
+      run: |
+        docker logs webapp
+
+   # - name: installing dependencies
+   #   run: sudo apt-get install -y telnet
+    - name: running container
+
+      run: |
+        sleep 30
+         
+    #- name: debubbing
+    #  run: docker exec pythonapp telnet 172.18.0.3:80
+
+    - name: sending post requst
+      run: |
+        sleep 30
+        curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
+        curl -X GET http://localhost:80/items/1
+
+
