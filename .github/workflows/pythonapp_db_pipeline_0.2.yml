@@ -41,7 +41,7 @@ jobs:
         run: |
          
           db_container= $(docker ps --format "{{.Names}}")
-          echo db_container
+          echo $db_container
       - name: network connection
         run: |
           docker network connect hostnetwork $db_container
