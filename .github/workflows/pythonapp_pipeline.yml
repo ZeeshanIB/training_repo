@@ -1,7 +1,12 @@
 name: web-app pipeline
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+     - main
+  
 
   workflow_call:
     #inputs:
@@ -12,11 +17,7 @@ on:
     #    required: true
     #    type: string
     
-   # branches:
-    #  - main
-  #pull_request:
-   # branches:
-   #   - main
+ 
 # setting woking directory in github repo
 defaults:
  run:
