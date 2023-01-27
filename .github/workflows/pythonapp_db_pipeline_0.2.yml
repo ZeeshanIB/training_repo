@@ -55,7 +55,7 @@ jobs:
           docker ps
           container_names=$(docker ps --format "{{.Names}}")
           echo $container_names
-          docker run -d --name webapp --link $container_names:postgres --network hostnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+          docker run -d --name webapp --link 6bf1a7ec2b74488995d3c7ef80b119bf_postgres12_b70b90:postgres --network hostnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
 
          
 
