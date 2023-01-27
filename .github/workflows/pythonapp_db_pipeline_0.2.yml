@@ -39,10 +39,11 @@ jobs:
 
       - name: create and connect to networks
         run: |
-          docker network create hostnetwork
+         
+
           docker network connect hostnetwork $(docker ps --format "{{.Names}}")
         #docker network connect hostnetwork webapp
-
+ # docker network create hostnetwork
           
 
       - name: Connect to service container PostgreSQL
