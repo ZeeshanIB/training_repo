@@ -40,7 +40,7 @@ jobs:
       - name: create and connect to networks
         run: |
           docker ps 
-          db_container[]= $(docker ps --format "{{.Names}}")
+          db_container= $(docker ps --format "{{.Names}}") | awk '{print $NF}'
           echo $db_container
       - name: network connection
         run: |
