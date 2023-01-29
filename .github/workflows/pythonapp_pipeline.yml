@@ -28,10 +28,10 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set name output
-      id: image_name
+      id: name
       run: |
-        image_name = ${{ github.event.inputs.image_name }}
-        echo "::set-output image_name=value::${image_name:-"webapp-docker"}"
+        USER_INPUT=${{ github.event.inputs.image_name }}
+        echo "::set-output name=value::${USER_INPUT:-"webapp-docker"}"
 
     - name: docker login
       env:
@@ -41,7 +41,7 @@ jobs:
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: echo inputs
       run: |
-        echo ${{ steps.image_name.outputs.value}}:${{ inputs.image_tag }}
+        echo ${{ steps.name.outputs.value}}:${{ inputs.image_tag }}
     - name: Build the Docker image
       
       run: |
