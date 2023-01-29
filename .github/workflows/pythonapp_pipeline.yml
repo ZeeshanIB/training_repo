@@ -14,15 +14,13 @@ on:
         description: Name of the Docker image
         required: true
         type: string
-        default: ${{ env.IMAGE_NAME }}
+        default: "webapp-docker"
       image_tag:
         description: Tag of the Docker image
         required: true
         type: string
-        default: ${{ env.IMAGE_TAG }}
-    env:
-      IMAGE_NAME: webapp-docker
-      IMAGE_TAG: v2  
+        default: "v2"
+  
 # setting woking directory in github repo
 defaults:
  run:
@@ -34,15 +32,19 @@ jobs:
 
 
     steps:
+    
     - uses: actions/checkout@v3
 
-
+    - name: default inputs
+      run: |
+        echo: ${{ inputs.image_name }}:${{ inputs.image_tag }}
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+
     - name: Build the Docker image
       
       run: |
