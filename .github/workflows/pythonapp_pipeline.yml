@@ -37,7 +37,7 @@ jobs:
 
     - name: default inputs
       run: |
-        echo: ${{ inputs.image_name }}:${{ inputs.image_tag }}
+        echo: ${{ inputs.image_name }}
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
