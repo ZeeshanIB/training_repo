@@ -24,4 +24,4 @@ jobs:
       
       image_name: webapp-docker
       image_tag: v2
-      secrets: inherit
+    secrets: inherit
