@@ -9,17 +9,20 @@ on:
     - main
   
   workflow_call:
+    env:
+      IMAGE_NAME: webapp-docker
+      IMAGE_TAG: v2
     inputs:
       image_name:
         description: Name of the Docker image
         required: true
         type: string
-        default: "webapp-docker"
+        default: ${{ env.IMAGE_NAME }}
       image_tag:
         description: Tag of the Docker image
         required: true
         type: string
-        default: "v2"
+        default: ${{ env.IMAGE_TAG }}
   
 # setting woking directory in github repo
 defaults:
