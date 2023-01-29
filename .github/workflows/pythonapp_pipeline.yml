@@ -47,9 +47,9 @@ jobs:
       
       run: |
         
-        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ steps.name.outputs.image_name}}:${{ steps.name.outputs.image_tag}} .
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+      run: docker push ${{secrets.DOCKER_USER}}/${{ steps.name.outputs.image_name}}:${{ steps.name.outputs.image_tag}}
 
 
 
