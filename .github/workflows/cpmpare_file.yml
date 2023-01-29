@@ -1,0 +1,30 @@
+name: Compare Files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
+
+jobs:
+  compare-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Compare files
+      run: |
+        if cmp web-app/version.txt tracker/main/web-app ; then
+          echo "Files are the same"
+          exit 1
+        else
+          echo "Files are different"
+        fi
+
+    - name: Next step
+      run: echo "Continuing to the next step..."
