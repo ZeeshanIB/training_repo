@@ -73,6 +73,7 @@ jobs:
         image: postgres:12
         
         # Provide the password for postgres
+      
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -90,10 +91,10 @@ jobs:
         uses: actions/checkout@v3
 
 
-      - name: create and connect to networks
-        run: |
-          docker network create mynetwork
-          docker network connect mynetwork $(docker ps --format "{{.Names}}")
+      #- name: create and connect to networks
+      #  run: |
+     #     docker network create mynetwork
+    #      docker network connect mynetwork $(docker ps --format "{{.Names}}")
         #docker network connect mynetwork webapp
 
           
