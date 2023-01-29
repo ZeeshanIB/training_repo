@@ -21,7 +21,7 @@ on:
         default: "v1"
 
 #env:
- # IMAGE_NAME: ${{ inputs.image_name }}
+ #IMAGE_NAME: ${{ inputs.image_name }}
  #IMAGE_TAG: ${{ inputs.image_tag }} 
   
 
