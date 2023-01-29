@@ -14,52 +14,44 @@ on:
         type: string
         default: "v1"  
 
-# setting woking directory in github repo
-defaults:
-  run:
-    working-directory: ./web-app
-
 jobs:
   build-webapp-image:
     runs-on: ubuntu-22.04
 
-
     steps:
+    #retrieve the latest version of the code in a repository
     - uses: actions/checkout@v3
-
+    # login to my docker hub account using repository secrets
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-    - name: echo inputs
-      run: |
-        echo ${{ inputs.image_name }}:${{ inputs.image_tag }}
+
+    # build docker image with name your docker hub user name / image name specified in inputs : tag specified in inputs  
     - name: Build the Docker image
       
       run: |
         
         docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
+    # pushing the image to your docker hub repository
     - name: Docker Push to docker hub
       run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
 
 
   webapp_deployment:
-    # Containers must run in Linux based operating systems
     runs-on: ubuntu-22.04
-    #runs-on: self-hosted
+
+    # webapp_deployment job depends on or needs build-webapp-app job to be Successful
     needs: build-webapp-image
 
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      
+    
+    services:  
       db:
         # Docker Hub image
         image: postgres:12
-        
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
@@ -72,7 +64,7 @@ jobs:
           --health-retries 5
     steps:
       
-      # Downloads a copy of the code in your repository 
+      #retrieve the latest version of the code in a repository
       
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -82,27 +74,25 @@ jobs:
         run: |
           docker network create mynetwork
           docker network connect mynetwork $(docker ps --format "{{.Names}}")
-        #docker network connect mynetwork webapp
+     
 
           
 
       - name: Connect to service container PostgreSQL
-       
         run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
 
-      - name: docker checks
+      - name: check running container and webapp container logs
         run: |
-          sleep 30
           docker ps 
           docker logs webapp
+          
 
       - name: sending post requst
         run: |
-          sleep 30
-          curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
           sleep 10
-          
+          curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
+         
       - name: sending get request
         run: curl http://localhost:80/items/1  
 
