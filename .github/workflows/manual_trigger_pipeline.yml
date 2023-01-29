@@ -1,6 +1,13 @@
 name: pipeline
 on:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 defaults:
  run:
   working-directory: ./web-app
@@ -8,4 +15,5 @@ jobs:
   call-pyhthonapp_pipeline:
 
     uses: ./.github/workflows/pythonapp_pipeline.yml
+   
     secrets: inherit

@@ -1,12 +1,12 @@
 name: web-app pipeline
 on:
   
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-    - main
+  #push:
+  #  branches:
+  #    - main
+ # pull_request:
+  #  branches:
+  #  - main
   
   workflow_call:
     inputs:
@@ -32,19 +32,15 @@ jobs:
 
 
     steps:
-    
     - uses: actions/checkout@v3
 
-    - name: default inputs
-      run: |
-        echo: ${{ inputs.image_name }}
+
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-
     - name: Build the Docker image
       
       run: |
