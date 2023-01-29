@@ -1,13 +1,17 @@
 name: pipeline
 on:
   workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
+     inputs:
+      image_name:
+        description: Name of the Docker image
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
+        type: string
+        default: "webapp-docker"
+      image_tag:
+        description: Tag of the Docker image
+        required: true
+        type: string
+        default: "v2"
 defaults:
  run:
   working-directory: ./web-app
