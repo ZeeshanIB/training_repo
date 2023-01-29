@@ -21,8 +21,6 @@ defaults:
   working-directory: ./web-app
 jobs:
   call-pyhthonapp_pipeline:
-    runs-on: ubuntu-22.04
-  steps:
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
       
