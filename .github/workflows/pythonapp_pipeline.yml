@@ -40,16 +40,19 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+   
     - name: echo inputs
       run: |
-        echo ${{ steps.name.outputs.image_name}}:${{ steps.name.outputs.image_tag}}
+        echo ${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}}
+  
+  
     - name: Build the Docker image
       
       run: |
         
-        docker build --tag ${{secrets.DOCKER_USER}}/${{ steps.name.outputs.image_name}}:${{ steps.name.outputs.image_tag}} .
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}} .
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/${{ steps.name.outputs.image_name}}:${{ steps.name.outputs.image_tag}}
+      run: docker push ${{secrets.DOCKER_USER}}/${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}}
 
 
 
