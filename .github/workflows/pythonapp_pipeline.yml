@@ -40,7 +40,7 @@ jobs:
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: echo inputs
       run: |
-        echo: ${{ inputs.image_name }}:${{ inputs.image_tag }}
+        echo ${{ inputs.image_name }}:${{ inputs.image_tag }}
     - name: Build the Docker image
       
       run: |
