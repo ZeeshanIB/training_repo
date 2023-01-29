@@ -104,7 +104,7 @@ jobs:
           docker ps
           container_names=$(docker ps --format "{{.Names}}")
           echo $container_names
-          docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+          docker run -d --name webapp --network host -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
       - name: docker checks
         run: |
