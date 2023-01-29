@@ -73,7 +73,6 @@ jobs:
         image: postgres:12
         
         # Provide the password for postgres
-      
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -91,21 +90,22 @@ jobs:
         uses: actions/checkout@v3
 
 
-      #- name: create and connect to networks
-      #  run: |
-     #     docker network create mynetwork
-    #      docker network connect mynetwork $(docker ps --format "{{.Names}}")
+      - name: create and connect to networks
+        run: |
+          container_name=$(docker ps --format "{{.Names}}")
+          docker network create mynetwork
+          docker network connect mynetwork $($container_name)
         #docker network connect mynetwork webapp
 
           
 
       - name: Connect to service container PostgreSQL
-       
-        run: | 
-          docker ps
-          container_names=$(docker ps --format "{{.Names}}")
-          echo $container_names
-          docker run -d --name webapp --network host -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+  
+        run: docker run -d --name webapp --link $container_name:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+
+         
+
+    
 
       - name: docker checks
         run: |
