@@ -31,8 +31,8 @@ jobs:
       run: |
         USER_INPUT_1=${{ github.event.inputs.image_name }}
         USER_INPUT_2=${{ github.event.inputs.image_tag }}
-        echo "::set-output name=image_name::${USER_INPUT:-"webapp-docker"}"
-        echo "::set-output name=image_tag::${USER_INPUT:-"v2"}"
+        echo "::set-output name=image_name::${USER_INPUT_1:-"webapp-docker"}"
+        echo "::set-output name=image_tag::${USER_INPUT_2:-"v2"}"
 
     - name: docker login
       env:
