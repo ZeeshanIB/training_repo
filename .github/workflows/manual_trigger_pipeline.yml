@@ -29,6 +29,7 @@ jobs:
       IMAGE_NAME: webapp-docker
       IMAGE_TAG: v2
     steps:
+    - uses: actions/checkout@v3
     - name: Trigger pipeline
       uses: ./.github/workflows/pythonapp_pipeline.yml
       with:
