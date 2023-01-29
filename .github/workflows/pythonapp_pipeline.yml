@@ -30,8 +30,8 @@ jobs:
     - name: Set name output
       id: image_name
       run: |
-        IMAGE_NAME =${{ github.event.inputs.image_name }}
-        echo "::set-output image_name=value::${IMAGE_NAME:-"webapp-docker"}"
+        image_name = ${{ github.event.inputs.image_name }}
+        echo "::set-output image_name=value::${image_name:-"webapp-docker"}"
 
     - name: docker login
       env:
