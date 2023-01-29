@@ -13,12 +13,7 @@ on:
         required: true
         type: string
         default: "v2"
-  pull_request:
-    branches:
-      - "main"
-  push:
-    branches:
-      - "main"
+  
 
 
 defaults:
@@ -28,10 +23,7 @@ jobs:
   call-pyhthonapp_pipeline:
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
-      image_name: ${{ github.event.inputs.name_1 }}
-      image_tag: ${{ github.event.inputs.name_2 }}
-       echo "::set-output name=value_1::${image_name:-"webapp-docker"}"
-       echo "::set-output name=value_2::${image_tag:-"v2"}"
-      #image_name: ${{ inputs.image_name }}
-      #image_tag: ${{ inputs.image_name }}
+      
+      image_name: ${{ inputs.image_name }}
+      image_tag: ${{ inputs.image_name }}
     secrets: inherit
