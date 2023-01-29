@@ -92,7 +92,6 @@ jobs:
 
       - name: create and connect to networks
         run: |
-          postgres_db=$(docker ps --format "{{.Names}}")
           docker network create mynetwork
           docker network connect mynetwork $(docker ps --format "{{.Names}}")
         #docker network connect mynetwork webapp
@@ -100,13 +99,22 @@ jobs:
           
 
       - name: Connect to service container PostgreSQL
-  
-        run: docker run -d --name webapp --link $postges_db:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+       
+        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
          
 
     
+        #docker run -d --name webapp --link $container_names:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
+         # docker logs postgres 
+        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+        #env:
+          # The hostname used to communicate with the PostgreSQL service container
+          #POSTGRES_HOST: postgres
+          # The default PostgreSQL port
+          #POSTGRES_PORT: 5432
 
+          #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
       - name: docker checks
         run: |
           sleep 30
