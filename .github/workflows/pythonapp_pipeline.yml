@@ -1,14 +1,7 @@
 name: web-app pipeline
+
 on:
-  
-  #push:
-  #  branches:
-  #    - main
- # pull_request:
-  #  branches:
-  #  - main
-  
-  workflow_call:
+  workflow_dispatch:
     inputs:
       image_name:
         description: Name of the Docker image
@@ -19,7 +12,11 @@ on:
         description: Tag of the Docker image
         required: true
         type: string
-        default: "v2"
+        default: "v1"
+
+env:
+  IMAGE_NAME: ${{ inputs.image_name }}
+  IMAGE_TAG: ${{ inputs.image_tag }}
   
 # setting woking directory in github repo
 defaults:
