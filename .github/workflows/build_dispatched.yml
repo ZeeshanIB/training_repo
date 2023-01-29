@@ -1,0 +1,32 @@
+name: Build Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: Name of the Docker image
+        required: true
+        type: string
+        default: "webapp-docker"
+      image_tag:
+        description: Tag of the Docker image
+        required: true
+        type: string
+        default: "v1"
+
+env:
+  IMAGE_NAME: ${{ inputs.image_name }}
+  IMAGE_TAG: ${{ inputs.image_tag }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: |
+        echo "Building Docker image ${IMAGE_NAME}:${IMAGE_TAG}"
+        docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
