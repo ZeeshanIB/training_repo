@@ -1,21 +1,26 @@
 name: web-app pipeline
 on:
-  #push:
-  #pull_request:
+  
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+    - main
+  
   workflow_call:
-    #inputs:
-    # DOCKER_USER:
-    #   required: true
-    #   type: string
-    #  DOCKER_PASSWORD:
-    #    required: true
-    #    type: string
-    
-   # branches:
-    #  - main
-  #pull_request:
-   # branches:
-   #   - main
+    inputs:
+      image_name:
+        description: Name of the Docker image
+        required: true
+        type: string
+        default: "webapp-docker"
+      image_tag:
+        description: Tag of the Docker image
+        required: true
+        type: string
+        default: "v2"
+  
 # setting woking directory in github repo
 defaults:
  run:
@@ -37,44 +42,29 @@ jobs:
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: Build the Docker image
-      run: docker build --tag zeeshanib/webapp-docker:v2 .
+      run: docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}.
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/webapp-docker:v2
+      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
-    - name: create and connect to networks
-      run: |
-          docker network create dbnetwork
 
-    - name: start postgres container
-      run: docker run -d --name postgres --network dbnetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:12
 
     - name: Start Web App container
-      run: docker run -d --name webapp --link postgres:postgres --network dbnetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
-  #  - name: docker container list
-  #    run: docker ps 
-    
+      run: docker run -d --name webapp -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
-   # - name: run docker compose 
-    #  run: docker-compose up -d
-
-   # - name: db and pythonapp container networks details
-   #   run: docker inspect db --format='{{ json .NetworkSettings.Networks }}' | jq && docker inspect pythonapp --format='{{ json .NetworkSettings.Networks }}' | jq
 
     
     - name: webapp container logs
       run: |
         docker logs webapp
 
-   # - name: installing dependencies
-   #   run: sudo apt-get install -y telnet
+ 
     - name: running container
 
       run: |
         sleep 30
         docker ps
          
-    #- name: debubbing
-    #  run: docker exec pythonapp telnet 172.18.0.3:80
+
 
     - name: sending post requst
       run: |
