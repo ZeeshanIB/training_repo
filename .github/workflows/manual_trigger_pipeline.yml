@@ -29,6 +29,6 @@ jobs:
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
       
-      image_name: webapp-docker
-      image_tag: v2
+      image_name: ${{ inputs.image_name }}
+      image_tag: ${{ inputs.imaage_tag }}
     secrets: inherit
