@@ -1,7 +1,7 @@
 name: web-app pipeline
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       image_name:
         description: Name of the Docker image
