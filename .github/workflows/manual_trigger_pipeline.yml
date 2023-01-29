@@ -12,9 +12,7 @@ on:
         required: true
         type: string
         default: "v2"
-env:
-  IMAGE_NAME: ${{ inputs.image_name }}
-  IMAGE_TAG: ${{ inputs.image_tag }}
+
 
 defaults:
  run:
@@ -24,6 +22,6 @@ jobs:
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
       
-      image_name: ${{ env.IMAGE_NAME }}
-      image_tag: ${{ env.IMAGE_TAG }}
+      image_name: webapp-docker
+      image_tag: v2
       secrets: inherit
