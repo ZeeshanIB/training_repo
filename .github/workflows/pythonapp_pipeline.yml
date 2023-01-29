@@ -42,7 +42,10 @@ jobs:
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
     - name: Build the Docker image
-      run: docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
+      
+      run: |
+        echo: ${{ inputs.image_name }}:${{ inputs.image_tag }}
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
     - name: Docker Push to docker hub
       run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
