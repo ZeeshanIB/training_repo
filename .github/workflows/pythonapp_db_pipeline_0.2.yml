@@ -1,7 +1,9 @@
 
 
 name: running PostgreSQL service 
-##on: push
+on: 
+  workflow_call:
+    
 
 jobs:
   # Label of the container job

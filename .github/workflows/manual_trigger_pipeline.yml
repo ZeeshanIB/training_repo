@@ -6,18 +6,32 @@ on:
         description: Name of the Docker image
         required: true
         type: string
-        default: "webapp-dock"
+        default: "webapp-docker"
       image_tag:
         description: Tag of the Docker image
         required: true
         type: string
-        default: "v"
+        default: "v2"
 defaults:
  run:
   working-directory: ./web-app
 jobs:
-  call-pyhthonapp_pipeline:
+  #call-pyhthonapp_pipeline:
+  
 
-    uses: ./.github/workflows/pythonapp_pipeline.yml
+  run:
+    runs-on: ubuntu-latest
+
+    name: Run pipeline
+    env:
+      IMAGE_NAME: webapp-docker
+      IMAGE_TAG: v2
+    steps:
+    - name: Trigger pipeline
+      uses: ./.github/workflows/pythonapp_pipeline.yml
+      with:
+        image_name: ${{ env.IMAGE_NAME }}
+        image_tag: ${{ env.IMAGE_TAG }}
+  
    
-    secrets: inherit
+        secrets: inherit

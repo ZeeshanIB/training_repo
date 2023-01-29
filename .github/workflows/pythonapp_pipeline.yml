@@ -14,12 +14,12 @@ on:
         description: Name of the Docker image
         required: true
         type: string
-        
+        default: "webapp-docker"
       image_tag:
         description: Tag of the Docker image
         required: true
         type: string
-        
+        default: "v2"
   
 # setting woking directory in github repo
 defaults:
