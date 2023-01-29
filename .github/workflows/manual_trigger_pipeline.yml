@@ -28,7 +28,6 @@ jobs:
   call-pyhthonapp_pipeline:
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
-      
       image_name: ${{ inputs.image_name }}
-      image_tag: ${{ inputs.imaage_tag }}
+      image_tag: ${{ inputs.image_name }}
     secrets: inherit
