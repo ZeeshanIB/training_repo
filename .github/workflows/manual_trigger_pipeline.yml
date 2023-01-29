@@ -1,5 +1,6 @@
 name: pipeline
 on:
+  
   workflow_dispatch:
      inputs:
       image_name:
@@ -12,6 +13,12 @@ on:
         required: true
         type: string
         default: "v2"
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
 
 
 defaults:

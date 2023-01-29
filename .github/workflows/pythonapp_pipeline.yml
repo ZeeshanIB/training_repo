@@ -1,12 +1,6 @@
 name: web-app pipeline
 
 on:
-  #push:
-   # branches:
-    #  - "main"
-  #pull_request:
-   # branches:
-    #  - "main"
   workflow_call:
     inputs:
       image_name:
@@ -18,12 +12,7 @@ on:
         description: Tag of the Docker image
         required: true
         type: string
-        default: "v1"
-
-#env:
- #IMAGE_NAME: ${{ inputs.image_name }}
- #IMAGE_TAG: ${{ inputs.image_tag }} 
-  
+        default: "v1"  
 
 # setting woking directory in github repo
 defaults:
@@ -102,19 +91,7 @@ jobs:
        
         run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
-         
 
-    
-        #docker run -d --name webapp --link $container_names:postgres -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/webapp-docker:v2
-         # docker logs postgres 
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        #env:
-          # The hostname used to communicate with the PostgreSQL service container
-          #POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          #POSTGRES_PORT: 5432
-
-          #DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
       - name: docker checks
         run: |
           sleep 30
@@ -126,6 +103,7 @@ jobs:
           sleep 30
           curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
           sleep 10
+          
       - name: sending get request
         run: curl http://localhost:80/items/1  
 
