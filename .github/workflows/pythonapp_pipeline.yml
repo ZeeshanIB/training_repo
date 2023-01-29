@@ -1,12 +1,12 @@
 name: web-app pipeline
 
 on:
-  push:
-    branches:
-      - "main"
-  pull_request:
-    branches:
-      - "main"
+  #push:
+   # branches:
+    #  - "main"
+  #pull_request:
+   # branches:
+    #  - "main"
   workflow_call:
     inputs:
       image_name:
@@ -20,15 +20,16 @@ on:
         type: string
         default: "v1"
 
-env:
-  IMAGE_NAME: ${{ inputs.image_name }}
-  IMAGE_TAG: ${{ inputs.image_tag }}
+#env:
+ # IMAGE_NAME: ${{ inputs.image_name }}
+ #IMAGE_TAG: ${{ inputs.image_tag }} 
   
+
 # setting woking directory in github repo
 defaults:
- run:
-  working-directory: ./web-app
-    
+  run:
+    working-directory: ./web-app
+
 jobs:
   build-webapp-image:
     runs-on: ubuntu-22.04
