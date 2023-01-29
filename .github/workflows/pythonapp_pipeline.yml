@@ -27,32 +27,22 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set output variables
-      run: |
-        USER_INPUT_1=${{ github.event.inputs.image_name }}
-        USER_INPUT_2=${{ github.event.inputs.image_tag }}
-        echo "::set-output name=image_name::${USER_INPUT_1:-"webapp-docker"}"
-        echo "::set-output name=image_tag::${USER_INPUT_2:-"v2"}"
-
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-   
     - name: echo inputs
       run: |
-        echo ${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}}
-  
-  
+        echo ${{ inputs.image_name }}:${{ inputs.image_tag }}
     - name: Build the Docker image
       
       run: |
         
-        docker build --tag ${{secrets.DOCKER_USER}}/${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}} .
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/${{ steps.Set_output_variables.outputs.image_name}}:${{ steps.Set_output_variables.outputs.image_tag}}
+      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
 
 
