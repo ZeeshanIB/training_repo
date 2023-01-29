@@ -92,16 +92,16 @@ jobs:
 
       - name: create and connect to networks
         run: |
-          container_name=$(docker ps --format "{{.Names}}")
+          postgres_db=$(docker ps --format "{{.Names}}")
           docker network create mynetwork
-          docker network connect mynetwork $($container_name)
+          docker network connect mynetwork $(docker ps --format "{{.Names}}")
         #docker network connect mynetwork webapp
 
           
 
       - name: Connect to service container PostgreSQL
   
-        run: docker run -d --name webapp --link $container_name:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+        run: docker run -d --name webapp --link $postges_db:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
 
          
 
