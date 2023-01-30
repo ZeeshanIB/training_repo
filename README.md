@@ -7,12 +7,16 @@ Before you begin, make sure you have the following software installed on your lo
 - Docker Compose
 
 
-## Clone the repository to your local machine:
+1. Clone the repository to your local machine:
 ```bash
 git clone https://github.com/ZeeshanIB/training_repo.git
-# Change into the project directory:
+```
+2.  Change into the project directory:
+```bash
 cd web-app
-#Start the containers:
+```
+3. Start the containers:
+```bash
 docker-compose up
 ```
 
