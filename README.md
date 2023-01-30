@@ -13,15 +13,18 @@ echo "Hello, World!"
 
 ## Setting up the project
 1. Clone the repository to your local machine:
-bash
-Copy code
-git clone https://github.com/<your-username>/<your-repo>.git
+```bash
+
+echo git clone https://github.com/<your-username>/<your-repo>.git
+
 2. Change into the project directory:
-bash
-Copy code
-cd <your-repo>
+
+```bash
+echo cd <your-repo>
 3. Start the containers:
-Copy code
-docker-compose up
+```bash
+echo docker-compose up
+
+
 Access the web app by visiting http://localhost:80 in your web browser.
 
