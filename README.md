@@ -6,6 +6,11 @@ Before you begin, make sure you have the following software installed on your lo
 - Docker
 - Docker Compose
 
+```bash
+# Your bash script code goes here
+echo "Hello, World!"
+
+
 ## Setting up the project
 1. Clone the repository to your local machine:
 bash
