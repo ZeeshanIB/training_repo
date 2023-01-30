@@ -16,15 +16,12 @@ echo "Hello, World!"
 ```bash
 
 echo git clone https://github.com/<your-username>/<your-repo>.git
-
 2. Change into the project directory:
-
 ```bash
 echo cd <your-repo>
 3. Start the containers:
 ```bash
 echo docker-compose up
-
 
 Access the web app by visiting http://localhost:80 in your web browser.
 
