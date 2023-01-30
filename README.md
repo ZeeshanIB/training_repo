@@ -10,9 +10,9 @@ Before you begin, make sure you have the following software installed on your lo
 1. Clone the repository to your local machine:
 echo git clone https://github.com/ZeeshanIB/training_repo.git
 2. Change into the project directory:
-echo cd web-app
+print(cd web-app)
 3. Start the containers:
-echo docker-compose up
+print(echo docker-compose up)
 
 Access the web app by visiting http://localhost:80 in your web browser.
 
