@@ -14,6 +14,7 @@ git clone https://github.com/ZeeshanIB/training_repo.git
 cd web-app
 #Start the containers:
 docker-compose up
+```bash
 
 Access the web app by visiting http://localhost:80/items/<id> in your web browser.
 you can access or test the webapp using
