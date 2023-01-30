@@ -6,5 +6,17 @@ Before you begin, make sure you have the following software installed on your lo
 - Docker
 - Docker Compose
 
-
+## Setting up the project
+1. Clone the repository to your local machine:
+bash
+Copy code
+git clone https://github.com/<your-username>/<your-repo>.git
+2. Change into the project directory:
+bash
+Copy code
+cd <your-repo>
+3. Start the containers:
+Copy code
+docker-compose up
+Access the web app by visiting http://localhost:80 in your web browser.
 
