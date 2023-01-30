@@ -1,6 +1,11 @@
 name: pipeline
 on:
+  push:
+    branches:
+      - "main"
   pull_request:
+    branches:
+      - "main"
   
   workflow_dispatch:
      inputs:
@@ -20,16 +25,18 @@ on:
 defaults:
  run:
   working-directory: ./web-app
+
+
 jobs:
   call-pyhthonapp_pipeline:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
       
       image_name: webapp-docker
       image_tag: v2
     secrets: inherit
-  job2:
+  call-pyhthonapp_pipeline_dispatched:
     if: github.event_name == 'workflow_dispatch'
     uses: ./.github/workflows/pythonapp_pipeline.yml
     with:
