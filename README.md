@@ -15,5 +15,11 @@ cd web-app
 #Start the containers:
 docker-compose up
 
-Access the web app by visiting http://localhost:80 in your web browser.
+Access the web app by visiting http://localhost:80/items/<id> in your web browser.
+you can access or test the webapp using
 
+- sending get request
+    - curl http://localhost:80/items/<id> 
+- sending post request
+
+    - curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": <value>, "content": <value>}'
