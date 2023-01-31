@@ -21,7 +21,7 @@ defaults:
 
 jobs:
   build-webapp-image:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     #retrieve the latest version of the code in a repository
@@ -47,7 +47,7 @@ jobs:
 
 
   webapp_deployment:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     # webapp_deployment job depends on or needs build-webapp-app job to be Successful
     needs: build-webapp-image
