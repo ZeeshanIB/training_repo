@@ -41,5 +41,5 @@ jobs:
         # Create the version string in the format vMAJOR.MINOR.PATCH
         version="v$MAJOR.$MINOR.$PATCH"
 
-        # Print the version string
+        
         echo "$version"
