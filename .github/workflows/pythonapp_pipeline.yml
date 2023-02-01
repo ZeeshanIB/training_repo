@@ -32,7 +32,7 @@ defaults:
 
 jobs:
   build-webapp-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
 
     steps:
@@ -60,7 +60,7 @@ jobs:
 
   webapp_deployment:
     # Containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     #runs-on: self-hosted
     needs: build-webapp-image
 
