@@ -5,19 +5,19 @@ on:
     branches:
       - "main"
       - "ZeeshanIB-patch"
-  pull_request:
-    branches:
-        - "main"
-        - "ZeeshanIB-patch"
+  #pull_request:
+   # branches:
+    #    - "main"
+     #   - "ZeeshanIB-patch"
 jobs:
   job1:
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
-      output1: ${{ steps.step1.outputs.version }}
+      output1: ${{ steps.version_print.outputs.version }}
      
     steps:
-      - id: step1
+      - name: version_print
         run: echo "version=hello" >> $GITHUB_OUTPUT
       
   job2:
