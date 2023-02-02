@@ -90,7 +90,7 @@ jobs:
 
     # webapp_deployment job depends on or needs build-webapp-app job to be Successful
 
-    needs: build-webapp-image
+    needs: [version_check, build-webapp-image]
 
     
     services:  
