@@ -3,9 +3,15 @@ on:
   push:
     branches:
       - "main"
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
   pull_request:
     branches:
       - "main"
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
   
   workflow_dispatch:
      inputs:
