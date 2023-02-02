@@ -28,6 +28,30 @@ jobs:
     #retrieve the latest version of the code in a repository
     - uses: actions/checkout@v3
     # login to my docker hub account using repository secrets
+    - name: Compare files
+      run: |
+        if cmp web-app/version.txt tracker/main/web-app ; then
+          echo "Files are the same"
+          exit 1
+        else
+          echo "Files are different"
+        fi
+
+    - name: Next step
+      run: |
+        content=$(cat web-app/version.txt)
+
+        # Extract the major, minor, and patch version numbers
+        MAJOR=$(echo "$content" | grep "MAJOR" | cut -d'=' -f2 | tr -d ' ')
+        MINOR=$(echo "$content" | grep "MINOR" | cut -d'=' -f2 | tr -d ' ')
+        PATCH=$(echo "$content" | grep "PATCH" | cut -d'=' -f2 | tr -d ' ')
+
+        # Create the version string in the format vMAJOR.MINOR.PATCH
+        version="v$MAJOR.$MINOR.$PATCH"
+
+        
+        echo "$version"
+        
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}

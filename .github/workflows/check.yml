@@ -1,0 +1,31 @@
+name: Compare Files
+
+on:
+  push:
+    branches:
+      - "main"
+      - "ZeeshanIB-patch"
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set version
+      run: echo "::set-env name=version::1.0.0"
+      id: set_version
+
+  job2:
+    runs-on: ubuntu-latest
+    
+    needs: job1
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ steps.set_version.outputs.version }}
+   
+    - name: Print version
+      run: |
+        echo "Version: $version"
+      
+    
