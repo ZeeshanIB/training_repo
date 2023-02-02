@@ -2,13 +2,11 @@ name: Compare Files
 
 on:
   push:
-    paths:
-      - "web-app"
+  
     branches:
       - main
   pull_request:
-    paths:
-      - "web-app"    
+    
     branches:
       - main
       
