@@ -18,8 +18,10 @@ jobs:
       run: |
         version=1.0.0
         echo $version
+        echo "::set-output name=version::$version"
+     
     - name: print
-      run: echo $version
+      run: echo ${{ steps.JobA.outputs.version }}
     
 
   job2:
