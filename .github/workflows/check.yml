@@ -6,9 +6,9 @@ on:
       - "main"
       - "ZeeshanIB-patch"
   pull_request:
-  branches:
-      - "main"
-      - "ZeeshanIB-patch"
+    branches:
+        - "main"
+        - "ZeeshanIB-patch"
 jobs:
   job1:
     runs-on: ubuntu-latest
