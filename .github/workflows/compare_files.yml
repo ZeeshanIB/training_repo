@@ -23,7 +23,7 @@ jobs:
       with:
         base: ${{ github.ref_name }}
         filters: |
-          /main/web-app
+          training_repo/web-app/
 
     - name: Compare files
       run: |
