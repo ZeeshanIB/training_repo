@@ -32,7 +32,7 @@ jobs:
 
       - name: Compare files
         run: |
-          if cmp version.txt tracker/main/web-app ; then
+          if cmp version.txt ../tracker/main/web-app ; then
             echo "Files are the same"
             exit 1
           else
@@ -42,7 +42,7 @@ jobs:
       - name: creating version string
         id: step1
         run: |
-          content=$(cat web-app/version.txt)
+          content=$(cat version.txt)
 
           # Extract the major, minor, and patch version numbers
           MAJOR=$(echo "$content" | grep "MAJOR" | cut -d'=' -f2 | tr -d ' ')
