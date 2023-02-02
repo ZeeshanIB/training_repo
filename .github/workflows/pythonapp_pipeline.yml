@@ -71,17 +71,16 @@ jobs:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-        docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-        echo ${{needs.version_check.outputs.output1}} 
+        docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} 
     # build docker image with name your docker hub user name / image name specified in inputs : tag specified in inputs  
     - name: Build the Docker image
       
       run: |
         
-        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}} .
     # pushing the image to your docker hub repository
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
 
 
 
@@ -125,7 +124,7 @@ jobs:
           
 
       - name: Connect to service container PostgreSQL
-        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
 
 
       - name: check running container and webapp container logs
