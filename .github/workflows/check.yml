@@ -15,7 +15,9 @@ jobs:
 
     steps:
     - name: Set version
-      run: version=1.0.0
+      run: version=$(1.0.0)
+    - name: print
+      run: echo $version
     
 
   job2:
@@ -30,6 +32,6 @@ jobs:
    
     - name: Print version
       run: |
-        echo "Version: $version"
+        echo Version: $version
       
     
