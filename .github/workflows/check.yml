@@ -14,28 +14,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set version
+    - name: Set the value
+
       run: |
-        version=1.0.0
-        echo $version
-        echo "::set-output name=version::$version"
-     
-    - name: print
-      run: echo ${{ steps.JobA.outputs.version }}
-    
+        version=v.1.1.1
+        echo "version=$version" >> $GITHUB_ENV
+    - name: Use the value
+  
+      run: |
+        echo "${{ env.version }}" # This will output 'yellow'
+
 
   job2:
     runs-on: ubuntu-latest
     
     needs: job1
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ steps.set_version.outputs.version }}
-   
+    
     - name: Print version
       run: |
-        echo Version: $version
+        echo "${{ env.version }}" # This will output 'yellow'
       
     
