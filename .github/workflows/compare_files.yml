@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - "main"
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
   pull_request:
     
     branches:
       - "main"
+    
       
 
 jobs:
