@@ -7,10 +7,10 @@ on:
       - "ZeeshanIB-patch"
     paths:
       - 'web-app/**'
-  pull_request:
+  #pull_request:
     
-    branches:
-      - "main"
+   # branches:
+    #  - "main"
     
       
 
