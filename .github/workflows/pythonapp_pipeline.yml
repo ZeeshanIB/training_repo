@@ -15,9 +15,9 @@ on:
         default: "v1" 
 
 # setting woking directory in github repo
-defaults:
-  run:
-    working-directory: ./web-app
+#defaults:
+#  run:
+ #   working-directory: ./web-app
 
 jobs:
   version_check:

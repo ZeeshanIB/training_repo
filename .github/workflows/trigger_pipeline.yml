@@ -12,7 +12,6 @@ on:
       #- "ZeeshanIB-patch"
     #paths:
      # - 'web-app/**'
-  
   workflow_dispatch:
      inputs:
       image_name:
