@@ -23,7 +23,7 @@ jobs:
       with:
         base: ${{ github.ref_name }}
         filters: |
-          web-app/**
+          web-app/
 
     - name: Compare files
       run: |
