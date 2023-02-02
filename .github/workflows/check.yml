@@ -1,4 +1,4 @@
-name: Compare Files
+name: check
 
 on:
   push:
@@ -15,15 +15,9 @@ jobs:
 
     steps:
     - name: Set the value
-
       run: |
         version=v.1.1.1
         echo "version=$version" >> $GITHUB_ENV
-    - name: Use the value
-  
-      run: |
-        echo "${{ env.version }}" # This will output 'yellow'
-
 
   job2:
     runs-on: ubuntu-latest
@@ -34,5 +28,6 @@ jobs:
     - name: Use the value
       run: |
         echo "${{ env.version }}"
+
       
     
