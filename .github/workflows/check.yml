@@ -12,12 +12,16 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.outputs.version }}
 
     steps:
     - name: Set the value
       run: |
         version=v.1.1.1
         echo "version=$version" >> $GITHUB_ENV
+        echo "version=$version" >> $GITHUB_OUTPUT
+
 
   job2:
     runs-on: ubuntu-latest
@@ -27,7 +31,7 @@ jobs:
     steps:
     - name: Use the value
       run: |
-        echo "${{ env.version }}"
+        echo ${{needs.job1.outputs.output1}}
 
       
     
