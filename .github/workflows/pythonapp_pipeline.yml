@@ -21,6 +21,7 @@ defaults:
 
 jobs:
   build-webapp-image:
+
     runs-on: ubuntu-20.04
 
     steps:
@@ -47,9 +48,11 @@ jobs:
 
 
   webapp_deployment:
+
     runs-on: ubuntu-20.04
 
     # webapp_deployment job depends on or needs build-webapp-app job to be Successful
+
     needs: build-webapp-image
 
     
