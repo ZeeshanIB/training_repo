@@ -7,12 +7,13 @@ on:
       - "ZeeshanIB-patch"
     paths:
       - 'web-app/**'
-  #pull_request:
+  pull_request:
+    branches:
+        - "main"
+        - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
     
-   # branches:
-    #  - "main"
-    
-      
 
 jobs:
   compare-files:
