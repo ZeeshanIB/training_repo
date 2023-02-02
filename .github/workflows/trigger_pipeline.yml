@@ -11,7 +11,7 @@ on:
       - "main"
       - "ZeeshanIB-patch"
     paths:
-      - 'web-app/**'
+      - 'web-app/***'
   
   workflow_dispatch:
      inputs:
