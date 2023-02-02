@@ -22,14 +22,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Filter by path
-      uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        base: ${{ github.ref_name }}
-        filters: |
-          web-app:
-            - 'web-app/**'
+   
 
     - name: Compare files
       run: |
