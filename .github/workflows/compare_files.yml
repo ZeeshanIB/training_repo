@@ -2,7 +2,8 @@ name: Compare Files
 
 on:
   push:
- 
+    paths:
+      - "training_repo/web-app"
     branches:
       - "ZeeshanIB-patch"
   pull_request:
