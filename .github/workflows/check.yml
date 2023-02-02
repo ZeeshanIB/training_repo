@@ -19,8 +19,8 @@ jobs:
     steps:
       - id: step1
         run: |
-          version=v1.1.1
-          echo "version=$version" >> $GITHUB_OUTPUT
+          
+          echo "version=v1.1.1" >> $GITHUB_OUTPUT
       
   job2:
     runs-on: ubuntu-latest
