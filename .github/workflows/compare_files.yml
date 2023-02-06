@@ -25,7 +25,7 @@ jobs:
           
           web-app:
             - 'web-app/*'
-          initial-fetch-depth: 1
+        depth: 1
     - name: Compare files
       run: |
         if cmp web-app/version.txt tracker/main/web-app ; then
