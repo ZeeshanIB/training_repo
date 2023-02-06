@@ -1,11 +1,11 @@
 name: Compare Files
 on:
-  #push:
-   # branches:
-    #  - "main"
-     # - "ZeeshanIB-patch"
-    #paths:
-     # - 'web-app/**'
+  push:
+    branches:
+      - "main"
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
   pull_request:
     branches:
        - "main"
