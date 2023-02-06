@@ -1,0 +1,37 @@
+name: pipeline
+on:
+  push:
+    branches:
+      - "main"
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
+  pull_request:
+    branches:
+      - "main"
+     # - "ZeeshanIB-patch"
+    paths:
+     - 'web-app/**'
+  workflow_dispatch:
+     inputs:
+      image_name:
+        description: Name of the Docker image
+        required: true
+        type: string
+        default: "webapp-docker"
+defaults:
+ run:
+  working-directory: ./web-app
+jobs:
+  call-pyhthonapp_pipeline:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    uses: ./.github/workflows/pythonapp_pipeline.yml
+    with:
+      image_name: webapp-docker
+    secrets: inherit
+  call-pyhthonapp_pipeline_dispatched:
+    if: github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/pythonapp_pipeline.yml
+    with:
+      image_name: ${{ inputs.image_name }}
+    secrets: inherit

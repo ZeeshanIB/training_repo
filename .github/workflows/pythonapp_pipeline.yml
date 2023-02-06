@@ -1,12 +1,5 @@
 name: web-app pipeline
-
 on:
-  #push:
-   # branches:
-    #  - "main"
-  #pull_request:
-   # branches:
-    #  - "main"
   workflow_call:
     inputs:
       image_name:
@@ -14,64 +7,65 @@ on:
         required: true
         type: string
         default: "webapp-docker"
-      image_tag:
-        description: Tag of the Docker image
-        required: true
-        type: string
-        default: "v1"
-
-#env:
- #IMAGE_NAME: ${{ inputs.image_name }}
- #IMAGE_TAG: ${{ inputs.image_tag }} 
-  
-
 # setting woking directory in github repo
 defaults:
   run:
     working-directory: ./web-app
-
 jobs:
-  build-webapp-image:
-    runs-on: ubuntu-18.04
-
-
+  version_check:
+    runs-on: ubuntu-20.04
+    outputs:
+      output1: ${{ steps.step1.outputs.version }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Compare files
+        run: |
+          if cmp version.txt ../tracker/main/web-app ; then
+            echo "Files are the same"
+            exit 1
+          else
+            echo "Files are different"
+          fi
+      - name: creating version string
+        id: step1
+        run: |
+          content=$(cat version.txt)
+          # Extract the major, minor, and patch version numbers
+          MAJOR=$(echo "$content" | grep "MAJOR" | cut -d'=' -f2 | tr -d ' ')
+          MINOR=$(echo "$content" | grep "MINOR" | cut -d'=' -f2 | tr -d ' ')
+          PATCH=$(echo "$content" | grep "PATCH" | cut -d'=' -f2 | tr -d ' ')
+          # Create the version string in the format vMAJOR.MINOR.PATCH
+          version="v$MAJOR.$MINOR.$PATCH"
+          echo "version=$version" >> $GITHUB_OUTPUT
+  build-webapp-image:
+    runs-on: ubuntu-20.04
+    needs: version_check
+    steps:
+    #retrieve the latest version of the code in a repository
     - uses: actions/checkout@v3
-
-
+    # login to my docker hub account using repository secrets
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-        docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-    - name: echo inputs
-      run: |
-        echo ${{ inputs.image_name }}:${{ inputs.image_tag }}
+        docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} 
+    # build docker image with name your docker hub user name / image name specified in inputs : tag specified in inputs  
     - name: Build the Docker image
-      
       run: |
-        
-        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }} .
+        docker build --tag ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}} .
+    # pushing the image to your docker hub repository
     - name: Docker Push to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-
-
-
+      run: docker push ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
   webapp_deployment:
-    # Containers must run in Linux based operating systems
-    runs-on: ubuntu-18.04
-    #runs-on: self-hosted
-    needs: build-webapp-image
-
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      
+    runs-on: ubuntu-20.04
+    # webapp_deployment job depends on or needs build-webapp-app job to be Successful
+    needs: [version_check, build-webapp-image]
+    services:  
       db:
         # Docker Hub image
         image: postgres:12
-        
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
@@ -83,40 +77,23 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      
-      # Downloads a copy of the code in your repository 
-      
+      #retrieve the latest version of the code in a repository
       - name: Check out repository code
         uses: actions/checkout@v3
-
-
       - name: create and connect to networks
         run: |
           docker network create mynetwork
           docker network connect mynetwork $(docker ps --format "{{.Names}}")
-        #docker network connect mynetwork webapp
-
-          
-
       - name: Connect to service container PostgreSQL
-       
-        run: | 
-          docker ps
-          container_names=$(docker ps --format "{{.Names}}")
-          echo $container_names
-          docker run -d --name webapp --link $container_names:postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-
-      - name: docker checks
+        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
+      - name: check running container and webapp container logs
         run: |
-          sleep 30
           docker ps 
           docker logs webapp
-
       - name: sending post requst
         run: |
-          sleep 30
-          curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'
           sleep 10
+          curl -X POST http://localhost:80/items -H "Content-Type: application/json" -d '{"title": "title3", "content": "content3"}'   
       - name: sending get request
         run: curl http://localhost:80/items/1  
 
