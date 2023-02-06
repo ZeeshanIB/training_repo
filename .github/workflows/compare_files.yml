@@ -27,7 +27,7 @@ jobs:
         filters: |
           web-app:
             - 'web-app/*'
-
+      
    
 
     - name: Compare files
