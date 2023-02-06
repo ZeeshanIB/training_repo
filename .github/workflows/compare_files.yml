@@ -18,13 +18,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
+   # - uses: dorny/paths-filter@v2
+    #  id: filter
+     # with:
+      #  filters: |
           
-          web-app:
-            - 'web-app/*'
+       
+       #   web-app:
+        #    - 'web-app/*'
       
     - name: Compare files
       run: |
