@@ -1,8 +1,9 @@
 name: Compare Files
 on:
-  push:
+  pull_request:
     branches:
        - "main"
+  
   #  paths:
    #  - 'web-app/**'
 jobs:
