@@ -2,30 +2,22 @@ name: Compare Files
 on:
   push:
     branches:
-      - "main"
-      - "ZeeshanIB-patch"
-    paths:
-      - 'web-app/**'
-  pull_request:
-    branches:
        - "main"
-       - "ZeeshanIB-patch"
-    paths:
-     - 'web-app/**'
+  #  paths:
+   #  - 'web-app/**'
 jobs:
   compare-files:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-   # - uses: dorny/paths-filter@v2
-    #  id: filter
-     # with:
-      #  filters: |
-          
-       
-       #   web-app:
-        #    - 'web-app/*'
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+
+          web-app:
+            - 'web-app/*'
       
     - name: Compare files
       run: |
