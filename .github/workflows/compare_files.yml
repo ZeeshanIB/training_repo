@@ -37,4 +37,4 @@ jobs:
         PATCH=$(echo "$content" | grep "PATCH" | cut -d'=' -f2 | tr -d ' ')
         # Create the version string in the format vMAJOR.MINOR.PATCH
         version="v$MAJOR.$MINOR.$PATCH"
-        echo "$version"
+       
