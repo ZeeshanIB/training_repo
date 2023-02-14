@@ -2,11 +2,9 @@ name: Compare Files
 on:
   push:
     branches:
-       - "main"
-       - "ZeeshanIB-patch"
-  
-  #  paths:
-   #  - 'web-app/**'
+      - "ZeeshanIB-patch"
+    paths:
+      - 'web-app/**'
 jobs:
   compare-files:
     runs-on: ubuntu-20.04
@@ -17,9 +15,8 @@ jobs:
       id: filter
       with:
         filters: |
-
           web-app:
-            - 'web-app/*'
+            - 'web-app/**'
       
     - name: Compare files
       run: |
