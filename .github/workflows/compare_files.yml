@@ -1,8 +1,10 @@
 name: Compare Files
 on:
-  push:
+  pull_request:
     branches:
-      - "ZeeshanIB-patch"
+      - "main"
+    paths:
+      - 'web-app/**'
     
 jobs:
   compare-files:
