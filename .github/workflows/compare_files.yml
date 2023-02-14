@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - "ZeeshanIB-patch"
-    paths:
-      - 'web-app/**'
+    
 jobs:
   compare-files:
     runs-on: ubuntu-20.04
