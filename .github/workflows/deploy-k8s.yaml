@@ -11,8 +11,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Minikube
-      uses: appleboy/setup-minikube@v1.29.0
+      uses: appleboy/setup-minikube@v2.0.2
     - name: Start Minikube
       run: minikube start
     - name: Deploy
-      run: kubectl apply -f deployment.yml
+      run: kubectl apply -f secrets-config.yaml
