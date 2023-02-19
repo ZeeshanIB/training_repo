@@ -14,11 +14,14 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Start Minikube
       run: minikube start
+    - name: Install xdg-utils
+      run: sudo apt-get install xdg-utils
+
     - name: Deploy
       run:  |
         kubectl apply -f secrets-config.yaml
         kubectl apply -f postgres-configmap.yaml
         kubectl apply -f PVC-PV-deployment.yaml
         kubectl apply -f flaskapp-deployment.yaml
-      #minikube service webapp-service
+        minikube service webapp-service
       #minikube dashboard
