@@ -28,5 +28,5 @@ jobs:
       run: |
         URL=$(minikube service webapp-service --url)
         echo "Service URL: $URL" 
-        xdg-open "$URL" 
+        curl -X POST $URL/items -H "Content-Type: application/json" -d '{"title": "helling", "content": "heling"}'
     # This command is for Ubuntu or Debian based Linux distributions. You may need to replace this command for other operating systems.
