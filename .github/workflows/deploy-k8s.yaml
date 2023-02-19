@@ -23,6 +23,9 @@ jobs:
         kubectl apply -f postgres-configmap.yaml
         kubectl apply -f PVC-PV-deployment.yaml
         kubectl apply -f flaskapp-deployment.yaml
+        kubectl get pod
+        kubectl get service
+        kubectl get pvc
     - name: service
     
       run: |
