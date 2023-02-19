@@ -23,5 +23,6 @@ jobs:
         kubectl apply -f postgres-configmap.yaml
         kubectl apply -f PVC-PV-deployment.yaml
         kubectl apply -f flaskapp-deployment.yaml
-        minikube service webapp-service
+    - name: service
+      run: minikube service webapp-service
       #minikube dashboard
