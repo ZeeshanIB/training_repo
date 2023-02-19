@@ -21,5 +21,4 @@ jobs:
         kubectl apply -f PVC-PV-deployment.yaml
         kubectl apply -f flaskapp-deployment.yaml
         minikube service webapp-service
-        minikube dashboard
-        
+      #minikube dashboard
