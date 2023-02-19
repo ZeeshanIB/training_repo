@@ -24,5 +24,9 @@ jobs:
         kubectl apply -f PVC-PV-deployment.yaml
         kubectl apply -f flaskapp-deployment.yaml
     - name: service
-      run: minikube service webapp-service
-      #minikube dashboard
+    
+      run: |
+        URL=$(minikube service webapp-service --url)
+        echo "Service URL: $URL" 
+        xdg-open "$URL" 
+    # This command is for Ubuntu or Debian based Linux distributions. You may need to replace this command for other operating systems.
