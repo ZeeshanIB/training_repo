@@ -15,4 +15,11 @@ jobs:
     - name: Start Minikube
       run: minikube start
     - name: Deploy
-      run: kubectl apply -f secrets-config.yaml
+      run:  |
+        kubectl apply -f secrets-config.yaml
+        kubectl apply -f postgres-configmap.yaml
+        kubectl apply -f PVC-PV-deployment.yaml
+        kubectl apply -f flaskapp-deployment.yaml
+        minikube service webapp-service
+        minikube dashboard
+        
