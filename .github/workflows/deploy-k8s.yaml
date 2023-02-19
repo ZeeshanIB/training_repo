@@ -22,13 +22,16 @@ jobs:
         kubectl apply -f secrets-config.yaml
         kubectl apply -f postgres-configmap.yaml
         kubectl apply -f PVC-PV-deployment.yaml
+        kubectl apply -f postgres-statefulset.yaml
         kubectl apply -f flaskapp-deployment.yaml
+        sleep 100 
         kubectl get pod
         kubectl get service
         kubectl get pvc
     - name: service
     
       run: |
+
         URL=$(minikube service webapp-service --url)
         echo "Service URL: $URL" 
         curl -X POST $URL/items -H "Content-Type: application/json" -d '{"title": "helling", "content": "heling"}'
