@@ -1,0 +1,18 @@
+name: Deploy to Minikube
+
+on: push
+defaults:
+  run:
+    working-directory: ./K8S_config
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Minikube
+      uses: appleboy/setup-minikube@v1.29.0
+    - name: Start Minikube
+      run: minikube start
+    - name: Deploy
+      run: kubectl apply -f deployment.yml
