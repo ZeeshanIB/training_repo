@@ -14,7 +14,7 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Start Minikube
       run: |
-        minikube start --addons=ingress
+        minikube start 
         
     - name: Install xdg-utils
       run: sudo apt-get install xdg-utils
