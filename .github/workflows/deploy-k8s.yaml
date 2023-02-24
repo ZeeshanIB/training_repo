@@ -31,7 +31,7 @@ jobs:
         kubectl get service
         kubectl get pvc
         kubectl get ingress
-        echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
+        
     - name: Test Web App with curl
       uses: jwalton/curl@v1
       with:
