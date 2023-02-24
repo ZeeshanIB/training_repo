@@ -1,10 +1,10 @@
 name: Compare Files
 on:
   push:
-    branches:
-      - "main"
-    paths:
-      - 'web-app/**'
+    #branches:
+     # - "main"
+    #paths:
+     # - 'web-app/**'
     
 jobs:
   compare-files:
@@ -14,12 +14,6 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: ${{ github.head_ref }}
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          web-app:
-            - 'web-app/**'
     
     - name: Compare files
       run: |
