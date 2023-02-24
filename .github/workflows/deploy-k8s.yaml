@@ -28,9 +28,11 @@ jobs:
         kubectl get pod
         kubectl get service
         kubectl get pvc
+        kubectl get ingress
     - name: testing
       run: |
         echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
+        curl webapp-service.com
         curl -X POST webapp-service.com -H "Content-Type: application/json" -d '{ "name":"helling", "experience":"5"}'
         curl webapp-service.com
   
