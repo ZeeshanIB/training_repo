@@ -1,10 +1,10 @@
 name: Compare Files
 on:
   push:
-    #branches:
-     # - "main"
-    #paths:
-     # - 'web-app/**'
+    branches:
+      - "main"
+    paths:
+      - 'web-app/**'
     
 jobs:
   compare-files:
