@@ -9,7 +9,7 @@ spec:
   - host: webapp-service.com
     http:
       paths:
-      - path: /items/1
+      - path: /
         pathType: Prefix
         backend:
           service:
