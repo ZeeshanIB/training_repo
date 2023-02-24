@@ -1,9 +1,9 @@
 name: Deploy to Minikube
 
-on: push
-defaults:
-  run:
-    working-directory: ./K8S_config
+#on: push
+#defaults:
+ # run:
+  #  working-directory: ./K8S_config
 jobs:
   deploy:
     runs-on: ubuntu-latest
