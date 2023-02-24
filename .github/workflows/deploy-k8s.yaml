@@ -31,13 +31,8 @@ jobs:
         kubectl get service
         kubectl get pvc
         kubectl get ingress
-        echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
-    - name: test curl
-      uses: |
-        image: curlimages/curl
-        command: ["curl", "-I", "http://localhost"]
-    - name: Test Web App with curl
-      
+        minikube addons enables
+    - name: Test Web App with curl  
       run: |
         echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
         curl webapp-service.com
