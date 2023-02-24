@@ -23,17 +23,14 @@ jobs:
         kubectl apply -f postgres-configmap.yaml
         kubectl apply -f postgres-statefulset.yaml
         kubectl apply -f flaskapp-deployment.yaml
+        kubectl apply -f Ingress-controller.yaml
         sleep 100 
         kubectl get pod
         kubectl get service
         kubectl get pvc
-    - name: service
-    
+    - name: testing
       run: |
-
-        URL=$(minikube service webapp-service --url)
-        echo "Service URL: $URL" 
-        curl -X POST $URL/ -H "Content-Type: application/json" -d '{ "name":"helling", "experience":"5"}'
-
-        curl $URL
-    # This command is for Ubuntu or Debian based Linux distributions. You may need to replace this command for other operating systems.
+        echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
+        curl -X POST webapp-service.com -H "Content-Type: application/json" -d '{ "name":"helling", "experience":"5"}'
+        curl webapp-service.com
+  
