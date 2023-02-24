@@ -33,5 +33,7 @@ jobs:
 
         URL=$(minikube service webapp-service --url)
         echo "Service URL: $URL" 
-        curl -X POST $URL/items -H "Content-Type: application/json" -d '{ "title":"helling", "content":"heling"}'
+        curl -X POST $URL/ -H "Content-Type: application/json" -d '{ "name":"helling", "experience":"5"}'
+
+        curl $URL
     # This command is for Ubuntu or Debian based Linux distributions. You may need to replace this command for other operating systems.
