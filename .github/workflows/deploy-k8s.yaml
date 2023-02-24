@@ -31,7 +31,7 @@ jobs:
         kubectl get service
         kubectl get pvc
         kubectl get ingress
-        minikube addons enables
+        minikube addons enables ingress
     - name: Test Web App with curl  
       run: |
         echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
