@@ -2,8 +2,7 @@ name: pipeline
 on:
   push:
     branches:
-      - "main"
-    
+      - "main" 
     paths:
       - 'web-app/**'
   workflow_dispatch:
