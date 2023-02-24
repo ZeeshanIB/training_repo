@@ -14,7 +14,7 @@ class User(db.Model):
     def __init__(self, name, experience):
         self.name = name
         self.experience = experience
-
+db.create_all()
 @app.route('/', methods=['POST'])
 def create_user():
     name = request.json['name']
