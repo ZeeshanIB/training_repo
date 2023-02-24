@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - "main" 
-    paths:
-      - 'web-app/**'
+    #paths:
+     # - 'web-app/**'
   workflow_dispatch:
      inputs:
       image_name:
