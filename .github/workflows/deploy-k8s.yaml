@@ -1,0 +1,41 @@
+name: Deploy to Minikube
+
+on: 
+defaults:
+  run:
+    working-directory: ./K8S_config
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Minikube
+      uses: medyagh/setup-minikube@master
+    - name: Start Minikube
+      run: |
+        minikube start 
+        
+    - name: Install xdg-utils
+      run: sudo apt-get install xdg-utils
+
+    - name: Deploy
+      run:  |
+        kubectl apply -f secrets-config.yaml
+        kubectl apply -f postgres-configmap.yaml
+        kubectl apply -f postgres-statefulset.yaml
+        kubectl apply -f flaskapp-deployment.yaml
+        kubectl apply -f Ingress-controller.yaml --validate=false
+        sleep 100 
+        kubectl get pod
+        kubectl get service
+        kubectl get pvc
+        kubectl get ingress
+        minikube addons enable ingress
+    - name: Test Web App with curl  
+      run: |
+        echo "$(minikube ip) webapp-service.com" | sudo tee -a /etc/hosts
+        curl webapp-service.com
+        curl -X POST webapp-service.com -H "Content-Type: application/json" -d '{ "name":"helling", "experience":"5"}'
+        curl webapp-service.com
+  

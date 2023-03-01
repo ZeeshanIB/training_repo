@@ -85,7 +85,7 @@ jobs:
           docker network create mynetwork
           docker network connect mynetwork $(docker ps --format "{{.Names}}")
       - name: Connect to service container PostgreSQL
-        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
+        run: docker run -d --name webapp --link $(docker ps --format "{{.Names}}"):postgres --network mynetwork -e DATABASE_URL_POST=postgresql://postgres:postgres@postgres:5432/postgres -e DATABASE_URL_GET=postgresql://postgres:postgres@postgres:5432/postgres -p 80:80 ${{secrets.DOCKER_USER}}/${{ inputs.image_name }}:${{needs.version_check.outputs.output1}}
       - name: check running container and webapp container logs
         run: |
           docker ps 

@@ -1,31 +1,21 @@
 name: Compare Files
 on:
-  #push:
-   # branches:
-    #  - "main"
-     # - "ZeeshanIB-patch"
-    #paths:
-     # - 'web-app/**'
-  pull_request:
+  push:
     branches:
-       - "main"
-       - "ZeeshanIB-patch"
+      - "main"
+      - "ZeeshanIB-patch"
     paths:
-     - 'web-app/**'
+      - 'web-app/**'
+    
 jobs:
   compare-files:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - uses: dorny/paths-filter@v2
-      id: filter
       with:
-        filters: |
-          
-          web-app:
-            - 'web-app/*'
-        initial-fetch-depth: 1
+        ref: ${{ github.head_ref }}
+    
     - name: Compare files
       run: |
         if cmp web-app/version.txt tracker/main/web-app ; then
@@ -43,4 +33,4 @@ jobs:
         PATCH=$(echo "$content" | grep "PATCH" | cut -d'=' -f2 | tr -d ' ')
         # Create the version string in the format vMAJOR.MINOR.PATCH
         version="v$MAJOR.$MINOR.$PATCH"
-        echo "$version"
+       

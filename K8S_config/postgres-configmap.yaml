@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+
+data: 
+  DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
