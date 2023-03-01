@@ -5,7 +5,7 @@ metadata:
   labels:
     app: webapp
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: webapp
@@ -35,7 +35,6 @@ metadata:
 spec:
   selector:
     app: webapp
-  type: NodePort
   ports:
     - protocol: TCP
       port: 8080

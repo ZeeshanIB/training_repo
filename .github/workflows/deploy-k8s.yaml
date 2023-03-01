@@ -1,6 +1,6 @@
 name: Deploy to Minikube
 
-on: push
+on: 
 defaults:
   run:
     working-directory: ./K8S_config
